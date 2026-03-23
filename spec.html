@@ -425,6 +425,19 @@
         }
 
         /* ========================================
+           TABLE WRAPPER (for horizontal scroll)
+           ======================================== */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-wrapper .spec-table {
+            margin-bottom: 0;
+        }
+
+        /* ========================================
            RESPONSIVE
            ======================================== */
         @media (max-width: 1024px) {
@@ -452,11 +465,205 @@
 
             .spec-content {
                 grid-column: 1;
-                padding: 2rem 1rem 4rem;
+                padding: 1.5rem 1rem 4rem;
             }
 
             .spec-title {
                 font-size: 1.75rem;
+            }
+
+            .spec-nav {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Typography */
+            .spec-title {
+                font-size: 1.5rem;
+            }
+
+            .spec-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            h2.section-heading {
+                font-size: 1.25rem;
+            }
+
+            h3.section-heading {
+                font-size: 1rem;
+            }
+
+            h4.section-heading {
+                font-size: 0.95rem;
+            }
+
+            .section-heading {
+                margin-top: 2rem;
+            }
+
+            /* Spec header metadata */
+            .spec-header {
+                margin-bottom: 2.5rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .spec-meta {
+                font-size: 0.8rem;
+                line-height: 1.6;
+            }
+
+            .spec-meta > div {
+                margin-bottom: 0.25rem;
+            }
+
+            .spec-meta-value {
+                word-break: break-word;
+            }
+
+            /* Tables */
+            .spec-table {
+                font-size: 0.8rem;
+            }
+
+            .spec-table th,
+            .spec-table td {
+                padding: 0.5rem 0.6rem;
+            }
+
+            .spec-table code {
+                font-size: 0.75rem;
+            }
+
+            /* Code blocks */
+            pre {
+                font-size: 0.8rem;
+                padding: 0.75rem;
+                border-radius: 4px;
+            }
+
+            pre code {
+                font-size: 0.8rem;
+            }
+
+            /* Inline code word break */
+            code {
+                word-break: break-word;
+            }
+
+            /* Defensive publication */
+            .defensive-publication {
+                padding-left: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            /* Lists */
+            .spec-content ul,
+            .spec-content ol {
+                padding-left: 1.25rem;
+            }
+
+            /* Nav bar */
+            .spec-nav {
+                gap: 0.5rem;
+            }
+
+            .spec-nav-back {
+                font-size: 0.8rem;
+                flex-shrink: 1;
+                min-width: 0;
+            }
+
+            .version-switcher {
+                flex-shrink: 0;
+            }
+
+            .version-switcher-label {
+                display: none;
+            }
+
+            .version-select {
+                font-size: 0.75rem;
+                padding: 0.35rem 0.5rem;
+                padding-right: 1.5rem;
+            }
+
+            .mobile-toc-toggle {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.75rem;
+                flex-shrink: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Very small screens */
+            .spec-content {
+                padding: 1rem 0.75rem 3rem;
+            }
+
+            .spec-title {
+                font-size: 1.35rem;
+            }
+
+            /* Hide back link text, show only arrow */
+            .spec-nav-back {
+                font-size: 0;
+            }
+
+            .spec-nav-back::before {
+                content: '←';
+                font-size: 1rem;
+            }
+
+            /* Tables - even smaller */
+            .spec-table {
+                font-size: 0.75rem;
+            }
+
+            .spec-table th,
+            .spec-table td {
+                padding: 0.4rem 0.5rem;
+            }
+
+            .spec-table code {
+                font-size: 0.7rem;
+                padding: 0.1em 0.25em;
+            }
+
+            /* Code blocks */
+            pre {
+                font-size: 0.75rem;
+                padding: 0.6rem;
+            }
+
+            /* RFC keywords */
+            .rfc-keyword {
+                font-size: 0.85em;
+                padding: 0.05em 0.3em;
+            }
+
+            /* Section numbers */
+            .section-number {
+                margin-right: 0.5rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            /* Extremely small screens (iPhone SE, etc.) */
+            .spec-nav {
+                padding: 0 0.75rem;
+            }
+
+            .mobile-toc-toggle {
+                padding: 0.35rem 0.5rem;
+            }
+
+            .version-select {
+                padding: 0.3rem 0.4rem;
+                padding-right: 1.25rem;
+                font-size: 0.7rem;
             }
         }
 
@@ -793,6 +1000,7 @@
             <h3 id="section-2-3" class="section-heading"><span class="section-number">2.3</span>Thread Identifiers</h3>
             <p>Every Thread has the following hardware-populated, read-only values available as special registers:</p>
 
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -839,6 +1047,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="section-2-4" class="section-heading"><span class="section-number">2.4</span>Core Resources</h3>
             <p>Each Core provides the following resources:</p>
@@ -1089,6 +1298,7 @@ return</code></pre>
             <p><strong>Barrier restriction:</strong> A barrier instruction <span class="rfc-keyword">MUST NOT</span> appear inside a divergent control flow path. That is, when a Wave reaches a barrier, all active Threads in that Wave (at the point of the outermost non-divergent scope) must reach the same barrier. Barriers inside uniform <code>if</code> blocks (where all Threads agree) are permitted. Barriers inside loops are permitted provided all Waves in the Workgroup execute the same number of barrier instructions per loop iteration.</p>
 
             <h3 id="section-6-13" class="section-heading"><span class="section-number">6.13</span>Control Flow Instructions</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1111,6 +1321,7 @@ return</code></pre>
                     <tr><td><code>halt</code></td><td>Terminate this Thread</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="section-6-14" class="section-heading"><span class="section-number">6.14</span>Matrix Multiply-Accumulate — OPTIONAL</h3>
             <ul>
@@ -1127,6 +1338,7 @@ return</code></pre>
             <h2 id="section-7" class="section-heading"><span class="section-number">7.</span>Capability System</h2>
 
             <h3 id="section-7-1" class="section-heading"><span class="section-number">7.1</span>Required Constants</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1193,6 +1405,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="section-7-2" class="section-heading"><span class="section-number">7.2</span>Optional Capabilities</h3>
             <ul>
@@ -1222,6 +1435,7 @@ return</code></pre>
             <p><strong>v0.2 change:</strong> The v0.1 encoding used 32-bit base instructions with 5-bit register fields (max 32 registers). This conflicted with MAX_REGISTERS = 64. The encoding has been widened to 48 bits with 8-bit register fields (max 256 registers).</p>
 
             <h3 id="section-8-2" class="section-heading"><span class="section-number">8.2</span>Base Instruction Format (48-bit)</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1283,6 +1497,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="section-8-3" class="section-heading"><span class="section-number">8.3</span>Extended Instruction Format (80-bit)</h3>
             <p>For instructions requiring a third source register or a 32-bit immediate:</p>
@@ -1293,6 +1508,7 @@ return</code></pre>
 
             <h3 id="section-8-4" class="section-heading"><span class="section-number">8.4</span>Opcode Map</h3>
             <p>The 8-bit opcode field provides 256 primary opcodes, organized as:</p>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1318,6 +1534,7 @@ return</code></pre>
                     <tr><td>0xF0-0xFF</td><td>Miscellaneous (mov, mov_imm, nop, halt)</td></tr>
                 </tbody>
             </table>
+            </div>
             <p>See Appendix A for the complete opcode-to-mnemonic mapping.</p>
 
             <!-- Section 9: Conformance -->
@@ -1382,6 +1599,7 @@ return</code></pre>
             <h2 id="appendix-a" class="section-heading"><span class="section-number">A.</span>Full Opcode Table</h2>
 
             <h4>Integer Arithmetic (0x00-0x0F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1404,8 +1622,10 @@ return</code></pre>
                     <tr><td>0x0E-0x0F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Floating-Point Arithmetic F32 (0x10-0x1F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1429,8 +1649,10 @@ return</code></pre>
                     <tr><td>0x1F</td><td><code>ftransc</code></td><td>Base</td><td>modifier: 0=sin, 1=cos, 2=exp2, 3=log2</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Bitwise Operations (0x20-0x27)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1446,8 +1668,10 @@ return</code></pre>
                     <tr><td>0x27</td><td><code>bfi</code></td><td>Extended</td><td>Insert bit field</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Comparison and Select (0x28-0x2F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1461,8 +1685,10 @@ return</code></pre>
                     <tr><td>0x2D-0x2F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Local Memory (0x30-0x37)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1473,8 +1699,10 @@ return</code></pre>
                     <tr><td>0x32-0x37</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Device Memory (0x38-0x3F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1485,8 +1713,10 @@ return</code></pre>
                     <tr><td>0x3A-0x3F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Atomic Operations (0x40-0x4F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1504,8 +1734,10 @@ return</code></pre>
                     <tr><td>0x49-0x4F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Wave Operations (0x50-0x5F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1524,8 +1756,10 @@ return</code></pre>
                     <tr><td>0x5A-0x5F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Control Flow and Synchronization (0x60-0x6F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1547,8 +1781,10 @@ return</code></pre>
                     <tr><td>0x6D-0x6F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Type Conversion (0x70-0x7F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1565,8 +1801,10 @@ return</code></pre>
                     <tr><td>0x78-0x7F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>F16 Arithmetic (0x80-0x8F)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1582,8 +1820,10 @@ return</code></pre>
                     <tr><td>0x87-0x8F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>F64 Arithmetic (0x90-0x9F) — Requires CAP_F64</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1598,8 +1838,10 @@ return</code></pre>
                     <tr><td>0x96-0x9F</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Matrix MMA (0xA0-0xAF) — Requires CAP_MMA</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1611,8 +1853,10 @@ return</code></pre>
                     <tr><td>0xA3-0xAF</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <h4>Miscellaneous (0xF0-0xFF)</h4>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr><th>Opcode</th><th>Mnemonic</th><th>Format</th><th>Description</th></tr>
@@ -1625,9 +1869,11 @@ return</code></pre>
                     <tr><td>0xF4-0xFF</td><td>Reserved</td><td>—</td><td>—</td></tr>
                 </tbody>
             </table>
+            </div>
 
             <!-- Appendix B: Vendor Mapping -->
             <h2 id="appendix-b" class="section-heading"><span class="section-number">B.</span>Vendor Mapping Reference</h2>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1714,9 +1960,11 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <!-- Appendix C -->
             <h2 id="appendix-c" class="section-heading"><span class="section-number">C.</span>Revision History</h2>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1738,6 +1986,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <!-- Defensive Publication Statement -->
             <div class="defensive-publication">
@@ -1809,6 +2058,7 @@ return</code></pre>
             <h3 id="v01-section-2-3" class="section-heading"><span class="section-number">2.3</span>Thread Identifiers</h3>
             <p>Every Thread has the following hardware-populated, read-only values available as special registers:</p>
 
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1855,6 +2105,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-2-4" class="section-heading"><span class="section-number">2.4</span>Core Resources</h3>
             <p>Each Core provides the following resources:</p>
@@ -1942,6 +2193,7 @@ return</code></pre>
             <h3 id="v01-section-4-1" class="section-heading"><span class="section-number">4.1</span>Memory Spaces</h3>
             <p>The specification defines four memory spaces:</p>
 
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -1978,6 +2230,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-4-2" class="section-heading"><span class="section-number">4.2</span>Local Memory Details</h3>
             <p>Local Memory <span class="rfc-keyword">MUST</span> support atomic operations. Access latency is implementation-defined but <span class="rfc-keyword">SHOULD</span> be significantly lower than Device Memory. Bank conflicts <span class="rfc-keyword">MAY</span> increase access latency but <span class="rfc-keyword">MUST NOT</span> affect correctness. The implementation <span class="rfc-keyword">MUST</span> provide at least MIN_LOCAL_MEMORY_SIZE bytes per Workgroup.</p>
@@ -2058,6 +2311,7 @@ return</code></pre>
             </ul>
 
             <h3 id="v01-section-6-2" class="section-heading"><span class="section-number">6.2</span>Integer Arithmetic</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2134,8 +2388,10 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-3" class="section-heading"><span class="section-number">6.3</span>Bitwise Operations</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2207,6 +2463,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-4" class="section-heading"><span class="section-number">6.4</span>Floating-Point (F32)</h3>
             <p>All implementations <span class="rfc-keyword">MUST</span> support IEEE 754-2008 single-precision (binary32) with the following exceptions:</p>
@@ -2216,6 +2473,7 @@ return</code></pre>
                 <li>NaN payloads are implementation-defined.</li>
             </ul>
 
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2290,6 +2548,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-5" class="section-heading"><span class="section-number">6.5</span>Floating-Point (F16)</h3>
             <p>Half-precision support is an optional capability. When present:</p>
@@ -2298,6 +2557,7 @@ return</code></pre>
                 <li>Operations operate on pairs (vec2) or scalars.</li>
             </ul>
 
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2320,10 +2580,12 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-6" class="section-heading"><span class="section-number">6.6</span>Floating-Point (F64)</h3>
             <p>Double-precision support is an optional capability. When present, operations use register pairs.</p>
 
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2350,8 +2612,10 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-7" class="section-heading"><span class="section-number">6.7</span>Type Conversion</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2394,8 +2658,10 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-8" class="section-heading"><span class="section-number">6.8</span>Comparison and Select</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2438,6 +2704,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
             <p>Floating-point comparisons include special handling for NaN:</p>
             <ul>
                 <li><code>setp.eq.f32</code>: false if either operand is NaN</li>
@@ -2445,6 +2712,7 @@ return</code></pre>
             </ul>
 
             <h3 id="v01-section-6-9" class="section-heading"><span class="section-number">6.9</span>Memory Operations</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2479,6 +2747,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
             <p>Vector loads/stores are supported for efficiency:</p>
             <ul>
                 <li><code>ld.global.v2.b32 {rd, rd+1}, [ra]</code> – load 2x32 bits</li>
@@ -2486,6 +2755,7 @@ return</code></pre>
             </ul>
 
             <h3 id="v01-section-6-10" class="section-heading"><span class="section-number">6.10</span>Atomic Operations</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2520,10 +2790,12 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
             <p>All atomic operations return the value before the operation was applied.</p>
 
             <h3 id="v01-section-6-11" class="section-heading"><span class="section-number">6.11</span>Wave Operations</h3>
             <p>Wave operations perform computation across all active Threads in a Wave.</p>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2590,8 +2862,10 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-12" class="section-heading"><span class="section-number">6.12</span>Synchronization</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2618,8 +2892,10 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-13" class="section-heading"><span class="section-number">6.13</span>Control Flow Instructions</h3>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2662,6 +2938,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-6-14" class="section-heading"><span class="section-number">6.14</span>Matrix MMA (Optional)</h3>
             <p>Matrix multiply-accumulate (MMA) operations are an optional capability. When present, implementations support tensor core-style operations:</p>
@@ -2673,6 +2950,7 @@ return</code></pre>
 
             <h3 id="v01-section-7-1" class="section-heading"><span class="section-number">7.1</span>Required Constants</h3>
             <p>Every implementation <span class="rfc-keyword">MUST</span> provide the following queryable constants:</p>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2719,9 +2997,11 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-7-2" class="section-heading"><span class="section-number">7.2</span>Optional Capabilities</h3>
             <p>Implementations <span class="rfc-keyword">MAY</span> support the following optional features:</p>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2760,9 +3040,11 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-7-3" class="section-heading"><span class="section-number">7.3</span>MMA Parameters</h3>
             <p>If <code>CAP_MMA</code> is present, the following constants define supported MMA shapes:</p>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2793,6 +3075,7 @@ return</code></pre>
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <h3 id="v01-section-7-4" class="section-heading"><span class="section-number">7.4</span>Query Mechanism</h3>
             <p>The host runtime provides a query function:</p>
@@ -2892,6 +3175,7 @@ wave_get_capability(device, WAVE_CAP_WAVE_WIDTH, &amp;wave_width, sizeof(wave_wi
             <h2 id="v01-appendix-b" class="section-heading"><span class="section-number">B.</span>Vendor Mapping</h2>
             <p>This appendix provides suggested mappings to vendor ISAs for reference implementations:</p>
 
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2954,9 +3238,11 @@ wave_get_capability(device, WAVE_CAP_WAVE_WIDTH, &amp;wave_width, sizeof(wave_wi
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <!-- Appendix C -->
             <h2 id="v01-appendix-c" class="section-heading"><span class="section-number">C.</span>Revision History</h2>
+            <div class="table-wrapper">
             <table class="spec-table">
                 <thead>
                     <tr>
@@ -2973,6 +3259,7 @@ wave_get_capability(device, WAVE_CAP_WAVE_WIDTH, &amp;wave_width, sizeof(wave_wi
                     </tr>
                 </tbody>
             </table>
+            </div>
 
             <!-- Defensive Publication Statement -->
             <div class="defensive-publication">

@@ -1,1196 +1,1263 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ojima Abraham | Software Engineer, Researcher & Open Source Contributor</title>
-    <meta
-      name="description"
-      content="Ojima Abraham is a software engineer at Kalshi working on distributed systems, high-performance computing, low-level programming, and open source tools."
-    />
-    <meta name="theme-color" content="#0a0e14" />
-    <meta property="og:title" content="Ojima Abraham | Software Engineer, Researcher & Open Source Contributor" />
-    <meta
-      property="og:description"
-      content="Open source projects, distributed systems research, protocol specs, and high-performance computing work by Ojima Abraham."
-    />
-    <meta
-      property="og:image"
-      content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0e14'/%3E%3Crect x='72' y='72' width='1056' height='486' rx='18' fill='%23111922' stroke='%231e2d3d'/%3E%3Ctext x='120' y='230' fill='%2300d4aa' font-size='42' font-family='monospace'%3E~/ojima $%3C/text%3E%3Ctext x='120' y='330' fill='%23e0e6ed' font-size='72' font-family='monospace'%3EOjima Abraham%3C/text%3E%3Ctext x='120' y='410' fill='%237a8a9e' font-size='32' font-family='sans-serif'%3Esoftware engineer · researcher · open source contributor%3C/text%3E%3C/svg%3E"
-    />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0e14'/%3E%3Cpath d='M14 18h36v28H14z' fill='%23111922' stroke='%2300d4aa' stroke-width='2'/%3E%3Cpath d='M20 28l6 6-6 6' fill='none' stroke='%2300d4aa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M32 40h10' stroke='%230ea5e9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap");
-
-      :root {
-        --bg-primary: #0a0e14;
-        --bg-surface: #111922;
-        --bg-surface-hover: #1a2332;
-        --border-default: #1e2d3d;
-        --text-primary: #e0e6ed;
-        --text-secondary: #7a8a9e;
-        --text-tertiary: #4a5568;
-        --accent: #00d4aa;
-        --accent-dim: #00d4aa33;
-        --accent-secondary: #0ea5e9;
-        --syntax-keyword: #c792ea;
-        --syntax-string: #c3e88d;
-        --syntax-function: #82aaff;
-        --syntax-comment: #546e7a;
-        --danger: #ff5f56;
-        --warning: #ffbd2e;
-        --success: #27c93f;
-        --amber: #fbbf24;
-        --max-width: 1100px;
-        --nav-height: 72px;
-        --radius: 8px;
-        --transition: 200ms ease;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        margin: 0;
-        background:
-          radial-gradient(circle at top, rgba(14, 165, 233, 0.08), transparent 24%),
-          linear-gradient(180deg, rgba(0, 212, 170, 0.03), transparent 18%),
-          var(--bg-primary);
-        color: var(--text-primary);
-        font-family: "IBM Plex Sans", sans-serif;
-        line-height: 1.65;
-        min-height: 100vh;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      img,
-      svg {
-        display: block;
-      }
-
-      button {
-        font: inherit;
-      }
-
-      ::selection {
-        background: var(--accent-dim);
-        color: var(--text-primary);
-      }
-
-      .container {
-        width: min(calc(100% - 2rem), var(--max-width));
-        margin: 0 auto;
-      }
-
-      .mono {
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .site-nav {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        height: var(--nav-height);
-        border-bottom: 1px solid rgba(30, 45, 61, 0.72);
-        background: rgba(10, 14, 20, 0.72);
-        backdrop-filter: blur(12px);
-        transition: background var(--transition), border-color var(--transition);
-      }
-
-      .site-nav.is-scrolled {
-        background: rgba(10, 14, 20, 0.92);
-        border-color: var(--border-default);
-      }
-
-      .nav-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        height: 100%;
-      }
-
-      .nav-brand {
-        color: var(--accent);
-        font-size: 0.98rem;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-        white-space: nowrap;
-      }
-
-      .nav-toggle {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        width: 42px;
-        height: 42px;
-        border: 1px solid var(--border-default);
-        border-radius: 6px;
-        background: var(--bg-surface);
-        color: var(--text-primary);
-      }
-
-      .nav-toggle span,
-      .nav-toggle span::before,
-      .nav-toggle span::after {
-        content: "";
-        display: block;
-        width: 18px;
-        height: 2px;
-        border-radius: 999px;
-        background: currentColor;
-        transition: transform var(--transition), opacity var(--transition);
-      }
-
-      .nav-toggle span::before {
-        transform: translateY(-6px);
-      }
-
-      .nav-toggle span::after {
-        transform: translateY(4px);
-      }
-
-      .nav-toggle[aria-expanded="true"] span {
-        background: transparent;
-      }
-
-      .nav-toggle[aria-expanded="true"] span::before {
-        transform: translateY(0) rotate(45deg);
-      }
-
-      .nav-toggle[aria-expanded="true"] span::after {
-        transform: translateY(-2px) rotate(-45deg);
-      }
-
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 1.1rem;
-      }
-
-      .nav-link {
-        position: relative;
-        color: var(--text-secondary);
-        font-size: 0.92rem;
-        transition: color var(--transition);
-      }
-
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -0.55rem;
-        width: 100%;
-        height: 2px;
-        background: var(--accent);
-        transform: scaleX(0);
-        transform-origin: center;
-        transition: transform var(--transition);
-      }
-
-      .nav-link::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: -0.7rem;
-        width: 0.35rem;
-        height: 0.35rem;
-        border-radius: 50%;
-        background: var(--accent);
-        opacity: 0;
-        transform: translateY(-50%) scale(0.8);
-        transition: opacity var(--transition), transform var(--transition);
-      }
-
-      .nav-link:hover,
-      .nav-link:focus-visible,
-      .nav-link.is-active {
-        color: var(--accent);
-      }
-
-      .nav-link.is-active::after {
-        transform: scaleX(1);
-      }
-
-      .nav-link.is-active::before {
-        opacity: 1;
-        transform: translateY(-50%) scale(1);
-      }
-
-      main {
-        overflow: clip;
-      }
-
-      .section {
-        padding: 5.5rem 0;
-        scroll-margin-top: calc(var(--nav-height) + 1rem);
-      }
-
-      .section-header {
-        margin-bottom: 2rem;
-      }
-
-      .section-kicker {
-        margin-bottom: 0.55rem;
-        color: var(--text-tertiary);
-        font-size: 0.92rem;
-        letter-spacing: 0.08em;
-        text-transform: lowercase;
-      }
-
-      .section-title {
-        margin: 0;
-        font-family: "JetBrains Mono", monospace;
-        font-size: clamp(1.6rem, 2vw, 2rem);
-        line-height: 1.2;
-      }
-
-      .section-description {
-        max-width: 60ch;
-        margin-top: 0.75rem;
-        color: var(--text-secondary);
-      }
-
-      .hero {
-        position: relative;
-        padding-top: calc(6.5rem + var(--nav-height));
-        padding-bottom: 6rem;
-      }
-
-      .hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-        background-size: 28px 28px;
-        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 88%);
-        pointer-events: none;
-      }
-
-      .hero-inner {
-        position: relative;
-      }
-
-      .eyebrow {
-        margin-bottom: 1rem;
-        color: var(--accent-secondary);
-        font-size: 0.88rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .hero-name {
-        margin: 0;
-        font-family: "JetBrains Mono", monospace;
-        font-size: clamp(2.55rem, 6vw, 4.2rem);
-        line-height: 1.05;
-        letter-spacing: -0.03em;
-      }
-
-      .hero-tagline {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.5rem;
-        margin-top: 1rem;
-        color: var(--text-secondary);
-        font-size: clamp(1rem, 2vw, 1.12rem);
-      }
-
-      .cursor {
-        color: var(--accent);
-        animation: blink 1s steps(1, end) infinite;
-      }
-
-      @keyframes blink {
-        0%,
-        49% {
-          opacity: 1;
-        }
-        50%,
-        100% {
-          opacity: 0;
-        }
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.9fr);
-        gap: 2rem;
-        align-items: start;
-        margin-top: 2.2rem;
-      }
-
-      .terminal {
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        background: linear-gradient(180deg, rgba(26, 35, 50, 0.94), rgba(17, 25, 34, 0.98));
-        overflow: hidden;
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
-      }
-
-      .terminal-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid var(--border-default);
-        background: rgba(10, 14, 20, 0.7);
-      }
-
-      .terminal-controls {
-        display: flex;
-        gap: 0.45rem;
-      }
-
-      .terminal-controls span {
-        width: 0.75rem;
-        height: 0.75rem;
-        border-radius: 50%;
-      }
-
-      .terminal-controls span:nth-child(1) {
-        background: var(--danger);
-      }
-
-      .terminal-controls span:nth-child(2) {
-        background: var(--warning);
-      }
-
-      .terminal-controls span:nth-child(3) {
-        background: var(--success);
-      }
-
-      .terminal-title {
-        color: var(--text-tertiary);
-        font-size: 0.78rem;
-      }
-
-      .terminal-body {
-        margin: 0;
-        padding: 1.25rem;
-        color: var(--text-secondary);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.9rem;
-        line-height: 1.7;
-        overflow-x: auto;
-      }
-
-      .prompt {
-        color: var(--text-tertiary);
-      }
-
-      .command {
-        color: var(--accent);
-      }
-
-      .output {
-        color: var(--text-secondary);
-      }
-
-      .hash {
-        color: var(--syntax-function);
-      }
-
-      .highlight {
-        color: var(--syntax-string);
-      }
-
-      .comment {
-        color: var(--syntax-comment);
-      }
-
-      .hero-panel {
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        background: rgba(17, 25, 34, 0.72);
-        padding: 1.25rem;
-      }
-
-      .hero-panel h2 {
-        margin: 0 0 0.75rem;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.95rem;
-        color: var(--accent);
-      }
-
-      .hero-panel p {
-        margin: 0;
-        color: var(--text-secondary);
-      }
-
-      .signal-list {
-        display: grid;
-        gap: 0.8rem;
-        margin-top: 1rem;
-      }
-
-      .signal-item {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 0.8rem;
-        align-items: start;
-      }
-
-      .signal-label {
-        color: var(--text-tertiary);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.78rem;
-        text-transform: uppercase;
-      }
-
-      .signal-value {
-        color: var(--text-primary);
-      }
-
-      .quick-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.9rem;
-        margin-top: 1.5rem;
-      }
-
-      .icon-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.55rem;
-        padding: 0.7rem 0.85rem;
-        border: 1px solid var(--border-default);
-        border-radius: 999px;
-        color: var(--text-secondary);
-        background: rgba(17, 25, 34, 0.52);
-        transition:
-          color var(--transition),
-          border-color var(--transition),
-          background var(--transition),
-          transform var(--transition);
-      }
-
-      .icon-link:hover,
-      .icon-link:focus-visible {
-        color: var(--accent);
-        border-color: var(--accent-dim);
-        background: rgba(0, 212, 170, 0.08);
-        transform: translateY(-1px);
-      }
-
-      .icon-link svg {
-        width: 1rem;
-        height: 1rem;
-        fill: currentColor;
-      }
-
-      .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 1rem;
-      }
-
-      .project-featured {
-        grid-column: span 2;
-        background:
-          linear-gradient(180deg, rgba(14, 165, 233, 0.05), transparent 28%),
-          var(--bg-surface);
-      }
-
-      .project-featured .repo-link {
-        font-size: 1.12rem;
-      }
-
-      .project-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem;
-        margin-top: 0.95rem;
-      }
-
-      .card {
-        grid-column: span 3;
-        height: 100%;
-        padding: 1.2rem;
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        background: var(--bg-surface);
-        transition:
-          border-color var(--transition),
-          background var(--transition),
-          box-shadow var(--transition),
-          transform var(--transition);
-      }
-
-      .card:hover,
-      .card:focus-within {
-        border-color: var(--accent-dim);
-        background: var(--bg-surface-hover);
-        box-shadow: 0 0 20px rgba(0, 212, 170, 0.03);
-        transform: translateY(-2px);
-      }
-
-      .repo-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.55rem;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 1.02rem;
-        color: var(--accent);
-      }
-
-      .repo-link:hover,
-      .publication-title:hover,
-      .spec-toc a:hover,
-      .press-link:hover .press-title {
-        text-decoration: underline;
-        text-decoration-color: var(--accent);
-        text-underline-offset: 0.18em;
-      }
-
-      .card p {
-        margin: 0.9rem 0 1rem;
-        color: var(--text-secondary);
-      }
-
-      .card-footer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 0.75rem;
-        align-items: center;
-      }
-
-      .lang-pill,
-      .meta-pill,
-      .link-pill,
-      .version-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.35rem 0.65rem;
-        border: 1px solid var(--border-default);
-        border-radius: 999px;
-        font-size: 0.78rem;
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .lang-pill {
-        background: rgba(10, 14, 20, 0.78);
-      }
-
-      .lang-dot,
-      .status-dot {
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 50%;
-        flex: 0 0 auto;
-      }
-
-      .stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        color: var(--text-tertiary);
-        font-size: 0.8rem;
-      }
-
-      .license-note {
-        color: var(--text-tertiary);
-        font-size: 0.78rem;
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .stats span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-      }
-
-      .heatmap-block {
-        margin-top: 2rem;
-        padding: 1rem 1.1rem 1.15rem;
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        background: rgba(17, 25, 34, 0.64);
-      }
-
-      .heatmap-label {
-        margin-bottom: 0.9rem;
-        color: var(--text-tertiary);
-        font-size: 0.82rem;
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .heatmap {
-        display: grid;
-        grid-template-rows: repeat(7, 12px);
-        grid-auto-flow: column;
-        grid-auto-columns: 12px;
-        gap: 6px;
-        overflow-x: auto;
-      }
-
-      .heatmap span {
-        border-radius: 3px;
-        border: 1px solid rgba(30, 45, 61, 0.35);
-        background: rgba(0, 212, 170, var(--level, 0.06));
-      }
-
-      .research-list {
-        display: grid;
-        gap: 1.5rem;
-      }
-
-      .scholar-cta {
-        margin-top: 1.5rem;
-      }
-
-      .scholar-cta a {
-        color: var(--accent);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.95rem;
-      }
-
-      .scholar-cta a:hover,
-      .scholar-cta a:focus-visible {
-        text-decoration: underline;
-        text-underline-offset: 0.18em;
-      }
-
-      .year-group {
-        padding-top: 1.5rem;
-        border-top: 1px solid rgba(30, 45, 61, 0.7);
-      }
-
-      .year-group:first-of-type {
-        padding-top: 0;
-        border-top: 0;
-      }
-
-      .publication {
-        display: grid;
-        grid-template-columns: 88px minmax(0, 1fr);
-        gap: 1rem;
-      }
-
-      .publication-year {
-        color: var(--text-tertiary);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 1.15rem;
-        padding-top: 0.15rem;
-      }
-
-      .publication-title {
-        font-size: 1.08rem;
-        font-weight: 600;
-        color: var(--text-primary);
-      }
-
-      .publication-venue {
-        margin-top: 0.35rem;
-        color: var(--text-secondary);
-        font-style: italic;
-      }
-
-      .publication-authors {
-        margin-top: 0.35rem;
-        color: var(--text-tertiary);
-      }
-
-      .publication-authors strong {
-        color: var(--accent);
-        font-weight: 600;
-      }
-
-      .publication-note {
-        margin-top: 0.35rem;
-        color: var(--text-tertiary);
-        font-size: 0.92rem;
-      }
-
-      .publication-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem;
-        margin-top: 0.85rem;
-      }
-
-      .link-pill {
-        color: var(--accent);
-        transition:
-          border-color var(--transition),
-          background var(--transition),
-          color var(--transition);
-      }
-
-      .link-pill:hover,
-      .link-pill:focus-visible {
-        border-color: var(--accent-dim);
-        background: rgba(0, 212, 170, 0.08);
-      }
-
-      .spec-shell {
-        display: grid;
-        gap: 1.2rem;
-      }
-
-      .spec-card {
-        padding: 1.5rem;
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        background:
-          linear-gradient(135deg, rgba(0, 212, 170, 0.05), transparent 32%),
-          linear-gradient(180deg, rgba(17, 25, 34, 0.96), rgba(17, 25, 34, 0.9));
-      }
-
-      .spec-top {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 1rem;
-        align-items: flex-start;
-      }
-
-      .spec-title {
-        margin: 0;
-        font-family: "JetBrains Mono", monospace;
-        font-size: clamp(1.75rem, 3vw, 2.3rem);
-        line-height: 1.15;
-      }
-
-      .version-badge {
-        color: #f8d77f;
-        background: rgba(251, 191, 36, 0.08);
-      }
-
-      .version-badge .status-dot {
-        background: var(--amber);
-        box-shadow: 0 0 10px rgba(251, 191, 36, 0.35);
-      }
-
-      .spec-abstract {
-        max-width: 72ch;
-        margin: 1rem 0 0;
-        color: var(--text-secondary);
-      }
-
-      .spec-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 1rem;
-      }
-
-      .meta-pill {
-        color: var(--text-tertiary);
-        background: rgba(10, 14, 20, 0.58);
-      }
-
-      .spec-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.85rem;
-        margin-top: 1.2rem;
-      }
-
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        min-height: 44px;
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        border: 1px solid transparent;
-        font-weight: 600;
-        transition:
-          transform var(--transition),
-          border-color var(--transition),
-          background var(--transition),
-          color var(--transition);
-      }
-
-      .button:hover,
-      .button:focus-visible {
-        transform: translateY(-1px);
-      }
-
-      .button-primary {
-        background: var(--accent);
-        color: #04130f;
-      }
-
-      .button-primary:hover,
-      .button-primary:focus-visible {
-        background: #1be0bb;
-      }
-
-      .button-secondary {
-        border-color: var(--accent-dim);
-        color: var(--accent);
-        background: transparent;
-      }
-
-      .button-secondary:hover,
-      .button-secondary:focus-visible {
-        background: rgba(0, 212, 170, 0.08);
-      }
-
-      .spec-toc-panel {
-        padding: 1.35rem 1.5rem;
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        background: rgba(17, 25, 34, 0.7);
-      }
-
-      .spec-toc-title {
-        margin: 0 0 1rem;
-        color: var(--text-tertiary);
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-
-      .spec-toc {
-        margin: 0;
-        display: grid;
-        gap: 0.55rem;
-      }
-
-      .spec-toc a {
-        display: block;
-        color: var(--text-secondary);
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .spec-toc strong {
-        color: var(--accent);
-        font-weight: 700;
-      }
-
-      .spec-toc .sub {
-        padding-left: 1.4rem;
-      }
-
-      .press-list {
-        display: grid;
-        gap: 0.85rem;
-      }
-
-      .press-link {
-        display: grid;
-        grid-template-columns: 38px minmax(0, 1fr) auto;
-        gap: 1rem;
-        align-items: center;
-        padding: 1rem 1rem 1rem 1.15rem;
-        border: 1px solid var(--border-default);
-        border-left: 2px solid transparent;
-        border-radius: var(--radius);
-        background: rgba(17, 25, 34, 0.56);
-        transition:
-          background var(--transition),
-          border-color var(--transition),
-          box-shadow var(--transition);
-      }
-
-      .press-link:hover,
-      .press-link:focus-visible {
-        background: var(--bg-surface-hover);
-        border-left-color: var(--accent);
-        box-shadow: 0 0 20px rgba(0, 212, 170, 0.03);
-      }
-
-      .press-icon {
-        display: grid;
-        place-items: center;
-        width: 28px;
-        height: 28px;
-        border: 1px solid var(--border-default);
-        border-radius: 6px;
-        color: var(--text-tertiary);
-        background: rgba(10, 14, 20, 0.65);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.8rem;
-      }
-
-      .press-title {
-        font-size: 1rem;
-        font-weight: 600;
-        transition: color var(--transition);
-      }
-
-      .press-meta {
-        margin-top: 0.2rem;
-        color: var(--text-secondary);
-      }
-
-      .press-meta strong {
-        font-weight: 500;
-      }
-
-      .press-blurb {
-        margin-top: 0.25rem;
-        color: var(--text-tertiary);
-        font-style: italic;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .press-arrow {
-        color: var(--text-tertiary);
-        font-size: 1.15rem;
-      }
-
-      .about-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-        gap: 1.25rem;
-      }
-
-      .about-card {
-        padding: 1.3rem;
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius);
-        background: rgba(17, 25, 34, 0.62);
-      }
-
-      .about-card p {
-        margin: 0;
-        color: var(--text-secondary);
-      }
-
-      .about-meta {
-        margin-top: 0.9rem;
-        color: var(--text-tertiary);
-        font-size: 0.88rem;
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .about-meta a {
-        color: var(--accent-secondary);
-      }
-
-      .about-meta a:hover,
-      .about-meta a:focus-visible {
-        text-decoration: underline;
-        text-underline-offset: 0.18em;
-      }
-
-      .contact-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.8rem 1rem;
-        margin-top: 1rem;
-      }
-
-      .contact-links a {
-        color: var(--accent);
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .contact-links a:hover,
-      .contact-links a:focus-visible {
-        text-decoration: underline;
-        text-underline-offset: 0.18em;
-      }
-
-      .colophon {
-        margin-top: 1rem;
-        color: var(--text-tertiary);
-        font-size: 0.88rem;
-      }
-
-      .footer {
-        padding: 2rem 0 3rem;
-      }
-
-      .footer-rule {
-        width: min(100%, 320px);
-        margin: 0 auto 1rem;
-        border: 0;
-        border-top: 1px solid rgba(30, 45, 61, 0.72);
-      }
-
-      .footer-copy {
-        text-align: center;
-        color: var(--text-tertiary);
-        font-size: 0.88rem;
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(12px);
-        transition:
-          opacity 400ms ease-out,
-          transform 400ms ease-out;
-        transition-delay: var(--delay, 0ms);
-      }
-
-      .reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      @media (max-width: 900px) {
-        .hero-grid,
-        .about-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .publication {
-          grid-template-columns: 1fr;
-          gap: 0.35rem;
-        }
-
-        .publication-year {
-          font-size: 0.95rem;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .section {
-          padding: 4.5rem 0;
-        }
-
-        .hero {
-          padding-top: calc(5.25rem + var(--nav-height));
-        }
-
-        .projects-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .card,
-        .project-featured {
-          grid-column: auto;
-        }
-
-        .nav-toggle {
-          display: inline-flex;
-        }
-
-        .nav-links {
-          position: absolute;
-          top: calc(100% + 0.5rem);
-          right: 1rem;
-          left: 1rem;
-          display: grid;
-          gap: 0.35rem;
-          padding: 0.75rem;
-          border: 1px solid var(--border-default);
-          border-radius: 10px;
-          background: rgba(10, 14, 20, 0.98);
-          opacity: 0;
-          pointer-events: none;
-          transform: translateY(-8px);
-          transition:
-            opacity var(--transition),
-            transform var(--transition);
-        }
-
-        .site-nav.is-open .nav-links {
-          opacity: 1;
-          pointer-events: auto;
-          transform: translateY(0);
-        }
-
-        .nav-link {
-          padding: 0.55rem 0.6rem 0.75rem 1rem;
-          border-radius: 8px;
-        }
-
-        .nav-link::after {
-          bottom: 0.2rem;
-          left: 0.9rem;
-          width: calc(100% - 1.8rem);
-        }
-
-        .nav-link::before {
-          left: 0.25rem;
-        }
-
-        .press-link {
-          grid-template-columns: 38px minmax(0, 1fr);
-        }
-
-        .press-arrow {
-          display: none;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-          scroll-behavior: auto !important;
-        }
-
-        .reveal {
-          opacity: 1;
-          transform: none;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="site-nav" aria-label="Primary">
-      <div class="container nav-inner">
-        <a class="nav-brand mono" href="#top">~/ojima $</a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
-          <span></span>
-        </button>
-        <div class="nav-links mono">
-          <a class="nav-link" href="#open-source">Open Source</a>
-          <a class="nav-link" href="#publications">Publications</a>
-          <a class="nav-link" href="#spec">Spec</a>
-          <a class="nav-link" href="#press">Press</a>
-          <a class="nav-link" href="#about">About</a>
-        </div>
-      </div>
-    </nav>
-
-    <main id="top">
-      <section class="hero">
-        <div class="container hero-inner">
-          <!-- PERSONAL INFO: Edit your name, tagline, and intro details below -->
-          <p class="eyebrow mono reveal">distributed systems · hpc · low-level engineering</p>
-          <h1 class="hero-name reveal">Ojima Abraham</h1>
-          <div class="hero-tagline reveal">
-            <span>software engineer · researcher · open source contributor</span>
-            <span class="cursor" aria-hidden="true">█</span>
-          </div>
-
-          <div class="hero-grid">
-            <div class="reveal">
-              <div class="terminal" aria-label="Decorative terminal summary">
-                <div class="terminal-bar">
-                  <div class="terminal-controls" aria-hidden="true">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Ojima Abraham | Software Engineer, Researcher & Open Source
+            Contributor
+        </title>
+        <meta
+            name="description"
+            content="Ojima Abraham is a software engineer at Kalshi working on distributed systems, high-performance computing, low-level programming, and open source tools."
+        />
+        <meta name="theme-color" content="#0a0e14" />
+        <meta
+            property="og:title"
+            content="Ojima Abraham | Software Engineer, Researcher & Open Source Contributor"
+        />
+        <meta
+            property="og:description"
+            content="Open source projects, distributed systems research, protocol specs, and high-performance computing work by Ojima Abraham."
+        />
+        <meta
+            property="og:image"
+            content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0e14'/%3E%3Crect x='72' y='72' width='1056' height='486' rx='18' fill='%23111922' stroke='%231e2d3d'/%3E%3Ctext x='120' y='230' fill='%2300d4aa' font-size='42' font-family='monospace'%3E~/ojima $%3C/text%3E%3Ctext x='120' y='330' fill='%23e0e6ed' font-size='72' font-family='monospace'%3EOjima Abraham%3C/text%3E%3Ctext x='120' y='410' fill='%237a8a9e' font-size='32' font-family='sans-serif'%3Esoftware engineer · researcher · open source contributor%3C/text%3E%3C/svg%3E"
+        />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0e14'/%3E%3Cpath d='M14 18h36v28H14z' fill='%23111922' stroke='%2300d4aa' stroke-width='2'/%3E%3Cpath d='M20 28l6 6-6 6' fill='none' stroke='%2300d4aa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M32 40h10' stroke='%230ea5e9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
+        />
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap");
+
+            :root {
+                --bg-primary: #0a0e14;
+                --bg-surface: #111922;
+                --bg-surface-hover: #1a2332;
+                --border-default: #1e2d3d;
+                --text-primary: #e0e6ed;
+                --text-secondary: #7a8a9e;
+                --text-tertiary: #4a5568;
+                --accent: #00d4aa;
+                --accent-dim: #00d4aa33;
+                --accent-secondary: #0ea5e9;
+                --syntax-keyword: #c792ea;
+                --syntax-string: #c3e88d;
+                --syntax-function: #82aaff;
+                --syntax-comment: #546e7a;
+                --danger: #ff5f56;
+                --warning: #ffbd2e;
+                --success: #27c93f;
+                --amber: #fbbf24;
+                --max-width: 1100px;
+                --nav-height: 72px;
+                --radius: 8px;
+                --transition: 200ms ease;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                margin: 0;
+                background:
+                    radial-gradient(
+                        circle at top,
+                        rgba(14, 165, 233, 0.08),
+                        transparent 24%
+                    ),
+                    linear-gradient(
+                        180deg,
+                        rgba(0, 212, 170, 0.03),
+                        transparent 18%
+                    ),
+                    var(--bg-primary);
+                color: var(--text-primary);
+                font-family: "IBM Plex Sans", sans-serif;
+                line-height: 1.65;
+                min-height: 100vh;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            img,
+            svg {
+                display: block;
+            }
+
+            button {
+                font: inherit;
+            }
+
+            ::selection {
+                background: var(--accent-dim);
+                color: var(--text-primary);
+            }
+
+            .container {
+                width: min(calc(100% - 2rem), var(--max-width));
+                margin: 0 auto;
+            }
+
+            .mono {
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .site-nav {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                height: var(--nav-height);
+                border-bottom: 1px solid rgba(30, 45, 61, 0.72);
+                background: rgba(10, 14, 20, 0.72);
+                backdrop-filter: blur(12px);
+                transition:
+                    background var(--transition),
+                    border-color var(--transition);
+            }
+
+            .site-nav.is-scrolled {
+                background: rgba(10, 14, 20, 0.92);
+                border-color: var(--border-default);
+            }
+
+            .nav-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                height: 100%;
+            }
+
+            .nav-brand {
+                color: var(--accent);
+                font-size: 0.98rem;
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                white-space: nowrap;
+            }
+
+            .nav-toggle {
+                display: none;
+                align-items: center;
+                justify-content: center;
+                width: 42px;
+                height: 42px;
+                border: 1px solid var(--border-default);
+                border-radius: 6px;
+                background: var(--bg-surface);
+                color: var(--text-primary);
+            }
+
+            .nav-toggle span,
+            .nav-toggle span::before,
+            .nav-toggle span::after {
+                content: "";
+                display: block;
+                width: 18px;
+                height: 2px;
+                border-radius: 999px;
+                background: currentColor;
+                transition:
+                    transform var(--transition),
+                    opacity var(--transition);
+            }
+
+            .nav-toggle span::before {
+                transform: translateY(-6px);
+            }
+
+            .nav-toggle span::after {
+                transform: translateY(4px);
+            }
+
+            .nav-toggle[aria-expanded="true"] span {
+                background: transparent;
+            }
+
+            .nav-toggle[aria-expanded="true"] span::before {
+                transform: translateY(0) rotate(45deg);
+            }
+
+            .nav-toggle[aria-expanded="true"] span::after {
+                transform: translateY(-2px) rotate(-45deg);
+            }
+
+            .nav-links {
+                display: flex;
+                align-items: center;
+                gap: 1.1rem;
+            }
+
+            .nav-link {
+                position: relative;
+                color: var(--text-secondary);
+                font-size: 0.92rem;
+                transition: color var(--transition);
+            }
+
+            .nav-link::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -0.55rem;
+                width: 100%;
+                height: 2px;
+                background: var(--accent);
+                transform: scaleX(0);
+                transform-origin: center;
+                transition: transform var(--transition);
+            }
+
+            .nav-link::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: -0.7rem;
+                width: 0.35rem;
+                height: 0.35rem;
+                border-radius: 50%;
+                background: var(--accent);
+                opacity: 0;
+                transform: translateY(-50%) scale(0.8);
+                transition:
+                    opacity var(--transition),
+                    transform var(--transition);
+            }
+
+            .nav-link:hover,
+            .nav-link:focus-visible,
+            .nav-link.is-active {
+                color: var(--accent);
+            }
+
+            .nav-link.is-active::after {
+                transform: scaleX(1);
+            }
+
+            .nav-link.is-active::before {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+
+            main {
+                overflow: clip;
+            }
+
+            .section {
+                padding: 5.5rem 0;
+                scroll-margin-top: calc(var(--nav-height) + 1rem);
+            }
+
+            .section-header {
+                margin-bottom: 2rem;
+            }
+
+            .section-kicker {
+                margin-bottom: 0.55rem;
+                color: var(--text-tertiary);
+                font-size: 0.92rem;
+                letter-spacing: 0.08em;
+                text-transform: lowercase;
+            }
+
+            .section-title {
+                margin: 0;
+                font-family: "JetBrains Mono", monospace;
+                font-size: clamp(1.6rem, 2vw, 2rem);
+                line-height: 1.2;
+            }
+
+            .section-description {
+                max-width: 60ch;
+                margin-top: 0.75rem;
+                color: var(--text-secondary);
+            }
+
+            .hero {
+                position: relative;
+                padding-top: calc(6.5rem + var(--nav-height));
+                padding-bottom: 6rem;
+            }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image:
+                    linear-gradient(
+                        rgba(255, 255, 255, 0.035) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.035) 1px,
+                        transparent 1px
+                    );
+                background-size: 28px 28px;
+                mask-image: linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0.7),
+                    transparent 88%
+                );
+                pointer-events: none;
+            }
+
+            .hero-inner {
+                position: relative;
+            }
+
+            .eyebrow {
+                margin-bottom: 1rem;
+                color: var(--accent-secondary);
+                font-size: 0.88rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            .hero-name {
+                margin: 0;
+                font-family: "JetBrains Mono", monospace;
+                font-size: clamp(2.55rem, 6vw, 4.2rem);
+                line-height: 1.05;
+                letter-spacing: -0.03em;
+            }
+
+            .hero-tagline {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 1rem;
+                color: var(--text-secondary);
+                font-size: clamp(1rem, 2vw, 1.12rem);
+            }
+
+            .cursor {
+                color: var(--accent);
+                animation: blink 1s steps(1, end) infinite;
+            }
+
+            @keyframes blink {
+                0%,
+                49% {
+                    opacity: 1;
+                }
+                50%,
+                100% {
+                    opacity: 0;
+                }
+            }
+
+            .hero-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.9fr);
+                gap: 2rem;
+                align-items: start;
+                margin-top: 2.2rem;
+            }
+
+            .terminal {
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius);
+                background: linear-gradient(
+                    180deg,
+                    rgba(26, 35, 50, 0.94),
+                    rgba(17, 25, 34, 0.98)
+                );
+                overflow: hidden;
+                box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+            }
+
+            .terminal-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid var(--border-default);
+                background: rgba(10, 14, 20, 0.7);
+            }
+
+            .terminal-controls {
+                display: flex;
+                gap: 0.45rem;
+            }
+
+            .terminal-controls span {
+                width: 0.75rem;
+                height: 0.75rem;
+                border-radius: 50%;
+            }
+
+            .terminal-controls span:nth-child(1) {
+                background: var(--danger);
+            }
+
+            .terminal-controls span:nth-child(2) {
+                background: var(--warning);
+            }
+
+            .terminal-controls span:nth-child(3) {
+                background: var(--success);
+            }
+
+            .terminal-title {
+                color: var(--text-tertiary);
+                font-size: 0.78rem;
+            }
+
+            .terminal-body {
+                margin: 0;
+                padding: 1.25rem;
+                color: var(--text-secondary);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.9rem;
+                line-height: 1.7;
+                overflow-x: auto;
+            }
+
+            .prompt {
+                color: var(--text-tertiary);
+            }
+
+            .command {
+                color: var(--accent);
+            }
+
+            .output {
+                color: var(--text-secondary);
+            }
+
+            .hash {
+                color: var(--syntax-function);
+            }
+
+            .highlight {
+                color: var(--syntax-string);
+            }
+
+            .comment {
+                color: var(--syntax-comment);
+            }
+
+            .hero-panel {
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius);
+                background: rgba(17, 25, 34, 0.72);
+                padding: 1.25rem;
+            }
+
+            .hero-panel h2 {
+                margin: 0 0 0.75rem;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.95rem;
+                color: var(--accent);
+            }
+
+            .hero-panel p {
+                margin: 0;
+                color: var(--text-secondary);
+            }
+
+            .signal-list {
+                display: grid;
+                gap: 0.8rem;
+                margin-top: 1rem;
+            }
+
+            .signal-item {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 0.8rem;
+                align-items: start;
+            }
+
+            .signal-label {
+                color: var(--text-tertiary);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.78rem;
+                text-transform: uppercase;
+            }
+
+            .signal-value {
+                color: var(--text-primary);
+            }
+
+            .quick-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.9rem;
+                margin-top: 1.5rem;
+            }
+
+            .icon-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.55rem;
+                padding: 0.7rem 0.85rem;
+                border: 1px solid var(--border-default);
+                border-radius: 999px;
+                color: var(--text-secondary);
+                background: rgba(17, 25, 34, 0.52);
+                transition:
+                    color var(--transition),
+                    border-color var(--transition),
+                    background var(--transition),
+                    transform var(--transition);
+            }
+
+            .icon-link:hover,
+            .icon-link:focus-visible {
+                color: var(--accent);
+                border-color: var(--accent-dim);
+                background: rgba(0, 212, 170, 0.08);
+                transform: translateY(-1px);
+            }
+
+            .icon-link svg {
+                width: 1rem;
+                height: 1rem;
+                fill: currentColor;
+            }
+
+            .projects-grid {
+                display: grid;
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                gap: 1rem;
+            }
+
+            .project-featured {
+                grid-column: span 2;
+                background:
+                    linear-gradient(
+                        180deg,
+                        rgba(14, 165, 233, 0.05),
+                        transparent 28%
+                    ),
+                    var(--bg-surface);
+            }
+
+            .project-featured .repo-link {
+                font-size: 1.12rem;
+            }
+
+            .project-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.55rem;
+                margin-top: 0.95rem;
+            }
+
+            .card {
+                grid-column: span 3;
+                height: 100%;
+                padding: 1.2rem;
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius);
+                background: var(--bg-surface);
+                transition:
+                    border-color var(--transition),
+                    background var(--transition),
+                    box-shadow var(--transition),
+                    transform var(--transition);
+            }
+
+            .card:hover,
+            .card:focus-within {
+                border-color: var(--accent-dim);
+                background: var(--bg-surface-hover);
+                box-shadow: 0 0 20px rgba(0, 212, 170, 0.03);
+                transform: translateY(-2px);
+            }
+
+            .repo-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.55rem;
+                font-family: "JetBrains Mono", monospace;
+                font-size: 1.02rem;
+                color: var(--accent);
+            }
+
+            .repo-link:hover,
+            .publication-title:hover,
+            .spec-toc a:hover,
+            .press-link:hover .press-title {
+                text-decoration: underline;
+                text-decoration-color: var(--accent);
+                text-underline-offset: 0.18em;
+            }
+
+            .card p {
+                margin: 0.9rem 0 1rem;
+                color: var(--text-secondary);
+            }
+
+            .card-footer {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 0.75rem;
+                align-items: center;
+            }
+
+            .lang-pill,
+            .meta-pill,
+            .link-pill,
+            .version-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.45rem;
+                padding: 0.35rem 0.65rem;
+                border: 1px solid var(--border-default);
+                border-radius: 999px;
+                font-size: 0.78rem;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .lang-pill {
+                background: rgba(10, 14, 20, 0.78);
+            }
+
+            .lang-dot,
+            .status-dot {
+                width: 0.5rem;
+                height: 0.5rem;
+                border-radius: 50%;
+                flex: 0 0 auto;
+            }
+
+            .stats {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                color: var(--text-tertiary);
+                font-size: 0.8rem;
+            }
+
+            .license-note {
+                color: var(--text-tertiary);
+                font-size: 0.78rem;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .stats span {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+
+            .heatmap-block {
+                margin-top: 2rem;
+                padding: 1rem 1.1rem 1.15rem;
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius);
+                background: rgba(17, 25, 34, 0.64);
+            }
+
+            .heatmap-label {
+                margin-bottom: 0.9rem;
+                color: var(--text-tertiary);
+                font-size: 0.82rem;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .heatmap {
+                display: grid;
+                grid-template-rows: repeat(7, 12px);
+                grid-auto-flow: column;
+                grid-auto-columns: 12px;
+                gap: 6px;
+                overflow-x: auto;
+            }
+
+            .heatmap span {
+                border-radius: 3px;
+                border: 1px solid rgba(30, 45, 61, 0.35);
+                background: rgba(0, 212, 170, var(--level, 0.06));
+            }
+
+            .research-list {
+                display: grid;
+                gap: 1.5rem;
+            }
+
+            .scholar-cta {
+                margin-top: 1.5rem;
+            }
+
+            .scholar-cta a {
+                color: var(--accent);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.95rem;
+            }
+
+            .scholar-cta a:hover,
+            .scholar-cta a:focus-visible {
+                text-decoration: underline;
+                text-underline-offset: 0.18em;
+            }
+
+            .year-group {
+                padding-top: 1.5rem;
+                border-top: 1px solid rgba(30, 45, 61, 0.7);
+            }
+
+            .year-group:first-of-type {
+                padding-top: 0;
+                border-top: 0;
+            }
+
+            .publication {
+                display: grid;
+                grid-template-columns: 88px minmax(0, 1fr);
+                gap: 1rem;
+            }
+
+            .publication-year {
+                color: var(--text-tertiary);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 1.15rem;
+                padding-top: 0.15rem;
+            }
+
+            .publication-title {
+                font-size: 1.08rem;
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            .publication-venue {
+                margin-top: 0.35rem;
+                color: var(--text-secondary);
+                font-style: italic;
+            }
+
+            .publication-authors {
+                margin-top: 0.35rem;
+                color: var(--text-tertiary);
+            }
+
+            .publication-authors strong {
+                color: var(--accent);
+                font-weight: 600;
+            }
+
+            .publication-note {
+                margin-top: 0.35rem;
+                color: var(--text-tertiary);
+                font-size: 0.92rem;
+            }
+
+            .publication-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.55rem;
+                margin-top: 0.85rem;
+            }
+
+            .link-pill {
+                color: var(--accent);
+                transition:
+                    border-color var(--transition),
+                    background var(--transition),
+                    color var(--transition);
+            }
+
+            .link-pill:hover,
+            .link-pill:focus-visible {
+                border-color: var(--accent-dim);
+                background: rgba(0, 212, 170, 0.08);
+            }
+
+            .spec-shell {
+                display: grid;
+                gap: 1.2rem;
+            }
+
+            .spec-card {
+                padding: 1.5rem;
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius);
+                background:
+                    linear-gradient(
+                        135deg,
+                        rgba(0, 212, 170, 0.05),
+                        transparent 32%
+                    ),
+                    linear-gradient(
+                        180deg,
+                        rgba(17, 25, 34, 0.96),
+                        rgba(17, 25, 34, 0.9)
+                    );
+            }
+
+            .spec-top {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .spec-title {
+                margin: 0;
+                font-family: "JetBrains Mono", monospace;
+                font-size: clamp(1.75rem, 3vw, 2.3rem);
+                line-height: 1.15;
+            }
+
+            .version-badge {
+                color: #f8d77f;
+                background: rgba(251, 191, 36, 0.08);
+            }
+
+            .version-badge .status-dot {
+                background: var(--amber);
+                box-shadow: 0 0 10px rgba(251, 191, 36, 0.35);
+            }
+
+            .spec-abstract {
+                max-width: 72ch;
+                margin: 1rem 0 0;
+                color: var(--text-secondary);
+            }
+
+            .spec-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                margin-top: 1rem;
+            }
+
+            .meta-pill {
+                color: var(--text-tertiary);
+                background: rgba(10, 14, 20, 0.58);
+            }
+
+            .spec-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.85rem;
+                margin-top: 1.2rem;
+            }
+
+            .button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                min-height: 44px;
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+                border: 1px solid transparent;
+                font-weight: 600;
+                transition:
+                    transform var(--transition),
+                    border-color var(--transition),
+                    background var(--transition),
+                    color var(--transition);
+            }
+
+            .button:hover,
+            .button:focus-visible {
+                transform: translateY(-1px);
+            }
+
+            .button-primary {
+                background: var(--accent);
+                color: #04130f;
+            }
+
+            .button-primary:hover,
+            .button-primary:focus-visible {
+                background: #1be0bb;
+            }
+
+            .button-secondary {
+                border-color: var(--accent-dim);
+                color: var(--accent);
+                background: transparent;
+            }
+
+            .button-secondary:hover,
+            .button-secondary:focus-visible {
+                background: rgba(0, 212, 170, 0.08);
+            }
+
+            .spec-toc-panel {
+                padding: 1.35rem 1.5rem;
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius);
+                background: rgba(17, 25, 34, 0.7);
+            }
+
+            .spec-toc-title {
+                margin: 0 0 1rem;
+                color: var(--text-tertiary);
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+            }
+
+            .spec-toc {
+                margin: 0;
+                display: grid;
+                gap: 0.55rem;
+            }
+
+            .spec-toc a {
+                display: block;
+                color: var(--text-secondary);
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .spec-toc strong {
+                color: var(--accent);
+                font-weight: 700;
+            }
+
+            .spec-toc .sub {
+                padding-left: 1.4rem;
+            }
+
+            .press-list {
+                display: grid;
+                gap: 0.85rem;
+            }
+
+            .press-link {
+                display: grid;
+                grid-template-columns: 38px minmax(0, 1fr) auto;
+                gap: 1rem;
+                align-items: center;
+                padding: 1rem 1rem 1rem 1.15rem;
+                border: 1px solid var(--border-default);
+                border-left: 2px solid transparent;
+                border-radius: var(--radius);
+                background: rgba(17, 25, 34, 0.56);
+                transition:
+                    background var(--transition),
+                    border-color var(--transition),
+                    box-shadow var(--transition);
+            }
+
+            .press-link:hover,
+            .press-link:focus-visible {
+                background: var(--bg-surface-hover);
+                border-left-color: var(--accent);
+                box-shadow: 0 0 20px rgba(0, 212, 170, 0.03);
+            }
+
+            .press-icon {
+                display: grid;
+                place-items: center;
+                width: 28px;
+                height: 28px;
+                border: 1px solid var(--border-default);
+                border-radius: 6px;
+                color: var(--text-tertiary);
+                background: rgba(10, 14, 20, 0.65);
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.8rem;
+            }
+
+            .press-title {
+                font-size: 1rem;
+                font-weight: 600;
+                transition: color var(--transition);
+            }
+
+            .press-meta {
+                margin-top: 0.2rem;
+                color: var(--text-secondary);
+            }
+
+            .press-meta strong {
+                font-weight: 500;
+            }
+
+            .press-blurb {
+                margin-top: 0.25rem;
+                color: var(--text-tertiary);
+                font-style: italic;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .press-arrow {
+                color: var(--text-tertiary);
+                font-size: 1.15rem;
+            }
+
+            .about-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+                gap: 1.25rem;
+            }
+
+            .about-card {
+                padding: 1.3rem;
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius);
+                background: rgba(17, 25, 34, 0.62);
+            }
+
+            .about-card p {
+                margin: 0;
+                color: var(--text-secondary);
+            }
+
+            .about-meta {
+                margin-top: 0.9rem;
+                color: var(--text-tertiary);
+                font-size: 0.88rem;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .about-meta a {
+                color: var(--accent-secondary);
+            }
+
+            .about-meta a:hover,
+            .about-meta a:focus-visible {
+                text-decoration: underline;
+                text-underline-offset: 0.18em;
+            }
+
+            .contact-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.8rem 1rem;
+                margin-top: 1rem;
+            }
+
+            .contact-links a {
+                color: var(--accent);
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            .contact-links a:hover,
+            .contact-links a:focus-visible {
+                text-decoration: underline;
+                text-underline-offset: 0.18em;
+            }
+
+            .colophon {
+                margin-top: 1rem;
+                color: var(--text-tertiary);
+                font-size: 0.88rem;
+            }
+
+            .footer {
+                padding: 2rem 0 3rem;
+            }
+
+            .footer-rule {
+                width: min(100%, 320px);
+                margin: 0 auto 1rem;
+                border: 0;
+                border-top: 1px solid rgba(30, 45, 61, 0.72);
+            }
+
+            .footer-copy {
+                text-align: center;
+                color: var(--text-tertiary);
+                font-size: 0.88rem;
+            }
+
+            .reveal {
+                opacity: 0;
+                transform: translateY(12px);
+                transition:
+                    opacity 400ms ease-out,
+                    transform 400ms ease-out;
+                transition-delay: var(--delay, 0ms);
+            }
+
+            .reveal.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            @media (max-width: 900px) {
+                .hero-grid,
+                .about-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .publication {
+                    grid-template-columns: 1fr;
+                    gap: 0.35rem;
+                }
+
+                .publication-year {
+                    font-size: 0.95rem;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .section {
+                    padding: 4.5rem 0;
+                }
+
+                .hero {
+                    padding-top: calc(5.25rem + var(--nav-height));
+                }
+
+                .projects-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .card,
+                .project-featured {
+                    grid-column: auto;
+                }
+
+                .nav-toggle {
+                    display: inline-flex;
+                }
+
+                .nav-links {
+                    position: absolute;
+                    top: calc(100% + 0.5rem);
+                    right: 1rem;
+                    left: 1rem;
+                    display: grid;
+                    gap: 0.35rem;
+                    padding: 0.75rem;
+                    border: 1px solid var(--border-default);
+                    border-radius: 10px;
+                    background: rgba(10, 14, 20, 0.98);
+                    opacity: 0;
+                    pointer-events: none;
+                    transform: translateY(-8px);
+                    transition:
+                        opacity var(--transition),
+                        transform var(--transition);
+                }
+
+                .site-nav.is-open .nav-links {
+                    opacity: 1;
+                    pointer-events: auto;
+                    transform: translateY(0);
+                }
+
+                .nav-link {
+                    padding: 0.55rem 0.6rem 0.75rem 1rem;
+                    border-radius: 8px;
+                }
+
+                .nav-link::after {
+                    bottom: 0.2rem;
+                    left: 0.9rem;
+                    width: calc(100% - 1.8rem);
+                }
+
+                .nav-link::before {
+                    left: 0.25rem;
+                }
+
+                .press-link {
+                    grid-template-columns: 38px minmax(0, 1fr);
+                }
+
+                .press-arrow {
+                    display: none;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                html {
+                    scroll-behavior: auto;
+                }
+
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                    scroll-behavior: auto !important;
+                }
+
+                .reveal {
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="site-nav" aria-label="Primary">
+            <div class="container nav-inner">
+                <a class="nav-brand mono" href="#top">~/ojima $</a>
+                <button
+                    class="nav-toggle"
+                    type="button"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false"
+                >
                     <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div class="terminal-title mono">session://ojima/profile</div>
+                </button>
+                <div class="nav-links mono">
+                    <a class="nav-link" href="#open-source">Open Source</a>
+                    <a class="nav-link" href="#publications">Publications</a>
+                    <a class="nav-link" href="#spec">Spec</a>
+                    <a class="nav-link" href="#press">Press</a>
+                    <a class="nav-link" href="#about">About</a>
                 </div>
-                <pre class="terminal-body"><span class="prompt">$</span> <span class="command">whoami</span>
+            </div>
+        </nav>
+
+        <main id="top">
+            <section class="hero">
+                <div class="container hero-inner">
+                    <!-- PERSONAL INFO: Edit your name, tagline, and intro details below -->
+                    <p class="eyebrow mono reveal">
+                        distributed systems · hpc · low-level engineering
+                    </p>
+                    <h1 class="hero-name reveal">Ojima Abraham</h1>
+                    <div class="hero-tagline reveal">
+                        <span
+                            >software engineer · researcher · open source
+                            contributor</span
+                        >
+                        <span class="cursor" aria-hidden="true">█</span>
+                    </div>
+
+                    <div class="hero-grid">
+                        <div class="reveal">
+                            <div
+                                class="terminal"
+                                aria-label="Decorative terminal summary"
+                            >
+                                <div class="terminal-bar">
+                                    <div
+                                        class="terminal-controls"
+                                        aria-hidden="true"
+                                    >
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <div class="terminal-title mono">
+                                        session://ojima/profile
+                                    </div>
+                                </div>
+                                <pre
+                                    class="terminal-body"
+                                ><span class="prompt">$</span> <span class="command">whoami</span>
 <span class="output">&gt; software engineer @ kalshi · open source contributor</span>
 <span class="prompt">$</span> <span class="command">cat</span> <span class="highlight">interests.txt</span>
 <span class="output">&gt; distributed systems, GPU computing, CDC, low-level programming</span>
@@ -1198,513 +1265,1065 @@
 <span class="output">&gt; <span class="hash">a1b2c3d</span> feat: chronos v1.1.0 released on PyPI</span>
 <span class="output">&gt; <span class="hash">d4e5f6g</span> feat: jikan CDC — building in public</span>
 <span class="output">&gt; <span class="hash">g7h8i9j</span> fix: stacked-seds radial photometry pipeline</span></pre>
-              </div>
+                            </div>
 
-              <!-- SOCIAL LINKS: Edit your links below -->
-              <div class="quick-links reveal">
-                <a class="icon-link" href="https://github.com/Oabraham1" target="_blank" rel="noreferrer" aria-label="GitHub">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.67.5 12.04c0 5.1 3.3 9.43 7.88 10.96.58.1.79-.25.79-.56 0-.28-.01-1.18-.02-2.14-3.2.7-3.88-1.38-3.88-1.38-.52-1.34-1.28-1.69-1.28-1.69-1.04-.72.08-.7.08-.7 1.15.08 1.75 1.19 1.75 1.19 1.02 1.76 2.68 1.25 3.33.95.1-.74.4-1.25.73-1.53-2.55-.29-5.23-1.29-5.23-5.72 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.48.11-3.08 0 0 .96-.31 3.15 1.18A10.8 10.8 0 0 1 12 6.3c.96 0 1.93.13 2.84.39 2.18-1.49 3.13-1.18 3.13-1.18.63 1.6.24 2.79.12 3.08.74.81 1.18 1.84 1.18 3.1 0 4.44-2.69 5.42-5.25 5.71.41.36.78 1.08.78 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.67.8.56A11.56 11.56 0 0 0 23.5 12C23.5 5.67 18.35.5 12 .5Z"/></svg>
-                  <span>GitHub</span>
-                </a>
-                <a class="icon-link" href="https://scholar.google.com/citations?user=8QdVQbQAAAAJ&hl=en&oi=ao" target="_blank" rel="noreferrer" aria-label="Google Scholar">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 13L5.5 12.45V16c0 2.49 3.13 4.5 6.5 4.5s6.5-2.01 6.5-4.5v-3.55L12 16Z"/></svg>
-                  <span>Scholar</span>
-                </a>
-                <a class="icon-link" href="https://ojimaabraham.substack.com" target="_blank" rel="noreferrer" aria-label="Substack">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v2H4V4Zm0 4h16v2H4V8Zm0 4h16v8l-8-4-8 4v-8Z"/></svg>
-                  <span>Substack</span>
-                </a>
-                <a class="icon-link" href="https://www.linkedin.com/in/ojima-abraham/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.48 2.48 0 1 0 5 8.46 2.48 2.48 0 0 0 4.98 3.5ZM3 9h4v12H3zm7 0h3.83v1.64h.05c.53-1 1.84-2.06 3.8-2.06 4.07 0 4.82 2.68 4.82 6.17V21h-4v-5.54c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.92V21h-4z"/></svg>
-                  <span>LinkedIn</span>
-                </a>
-                <a class="icon-link" href="https://x.com/chef_jiggy" target="_blank" rel="noreferrer" aria-label="X">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.73L23.2 22h-6.25l-4.9-6.42L6.4 22H3.3l7.24-8.28L.8 2h6.4l4.43 5.86L18.9 2Zm-1.1 18h1.73L6.26 3.9H4.4L17.8 20Z"/></svg>
-                  <span>X</span>
-                </a>
-              </div>
+                            <!-- SOCIAL LINKS: Edit your links below -->
+                            <div class="quick-links reveal">
+                                <a
+                                    class="icon-link"
+                                    href="https://github.com/Oabraham1"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="GitHub"
+                                >
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path
+                                            d="M12 .5C5.65.5.5 5.67.5 12.04c0 5.1 3.3 9.43 7.88 10.96.58.1.79-.25.79-.56 0-.28-.01-1.18-.02-2.14-3.2.7-3.88-1.38-3.88-1.38-.52-1.34-1.28-1.69-1.28-1.69-1.04-.72.08-.7.08-.7 1.15.08 1.75 1.19 1.75 1.19 1.02 1.76 2.68 1.25 3.33.95.1-.74.4-1.25.73-1.53-2.55-.29-5.23-1.29-5.23-5.72 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.48.11-3.08 0 0 .96-.31 3.15 1.18A10.8 10.8 0 0 1 12 6.3c.96 0 1.93.13 2.84.39 2.18-1.49 3.13-1.18 3.13-1.18.63 1.6.24 2.79.12 3.08.74.81 1.18 1.84 1.18 3.1 0 4.44-2.69 5.42-5.25 5.71.41.36.78 1.08.78 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.67.8.56A11.56 11.56 0 0 0 23.5 12C23.5 5.67 18.35.5 12 .5Z"
+                                        />
+                                    </svg>
+                                    <span>GitHub</span>
+                                </a>
+                                <a
+                                    class="icon-link"
+                                    href="https://scholar.google.com/citations?user=8QdVQbQAAAAJ&hl=en&oi=ao"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="Google Scholar"
+                                >
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path
+                                            d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm0 13L5.5 12.45V16c0 2.49 3.13 4.5 6.5 4.5s6.5-2.01 6.5-4.5v-3.55L12 16Z"
+                                        />
+                                    </svg>
+                                    <span>Scholar</span>
+                                </a>
+                                <a
+                                    class="icon-link"
+                                    href="https://ojimaabraham.substack.com"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="Substack"
+                                >
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path
+                                            d="M4 4h16v2H4V4Zm0 4h16v2H4V8Zm0 4h16v8l-8-4-8 4v-8Z"
+                                        />
+                                    </svg>
+                                    <span>Substack</span>
+                                </a>
+                                <a
+                                    class="icon-link"
+                                    href="https://www.linkedin.com/in/ojima-abraham/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="LinkedIn"
+                                >
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path
+                                            d="M4.98 3.5A2.48 2.48 0 1 0 5 8.46 2.48 2.48 0 0 0 4.98 3.5ZM3 9h4v12H3zm7 0h3.83v1.64h.05c.53-1 1.84-2.06 3.8-2.06 4.07 0 4.82 2.68 4.82 6.17V21h-4v-5.54c0-1.32-.02-3.02-1.84-3.02-1.84 0-2.12 1.44-2.12 2.92V21h-4z"
+                                        />
+                                    </svg>
+                                    <span>LinkedIn</span>
+                                </a>
+                                <a
+                                    class="icon-link"
+                                    href="https://x.com/chef_jiggy"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="X"
+                                >
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path
+                                            d="M18.9 2H22l-6.77 7.73L23.2 22h-6.25l-4.9-6.42L6.4 22H3.3l7.24-8.28L.8 2h6.4l4.43 5.86L18.9 2Zm-1.1 18h1.73L6.26 3.9H4.4L17.8 20Z"
+                                        />
+                                    </svg>
+                                    <span>X</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <aside class="hero-panel reveal">
+                            <h2>// active areas</h2>
+                            <p>
+                                Building systems that push closer to the
+                                machine: distributed infrastructure, GPU
+                                scheduling, CDC pipelines, and scientific
+                                computing tools.
+                            </p>
+                            <div class="signal-list">
+                                <div class="signal-item">
+                                    <div class="signal-label">current</div>
+                                    <div class="signal-value">
+                                        Distributed systems, systems
+                                        performance, parallel programming, and
+                                        HPC access for under-resourced builders
+                                    </div>
+                                </div>
+                                <div class="signal-item">
+                                    <div class="signal-label">writing</div>
+                                    <div class="signal-value">
+                                        Protocol notes, implementation writeups,
+                                        and research threads spanning CDC,
+                                        interpreters, and astrophysics tooling
+                                    </div>
+                                </div>
+                                <div class="signal-item">
+                                    <div class="signal-label">bias</div>
+                                    <div class="signal-value">
+                                        Precise interfaces, low overhead
+                                        abstractions, readable internals, and
+                                        software that respects hardware
+                                        realities
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="open-source">
+                <div class="container">
+                    <header class="section-header reveal">
+                        <div class="section-kicker mono">// open-source</div>
+                        <h2 class="section-title">Open Source</h2>
+                        <p class="section-description">
+                            Projects I've built and contribute to.
+                        </p>
+                    </header>
+
+                    <!-- PROJECTS: Edit your projects below -->
+                    <div class="projects-grid">
+                        <article class="card project-featured reveal">
+                            <a
+                                class="repo-link"
+                                href="https://github.com/Oabraham1/chronos"
+                                target="_blank"
+                                rel="noreferrer"
+                                >chronos</a
+                            >
+                            <p>
+                                Time-based GPU partitioning utility that lets
+                                multiple users or applications share a single
+                                GPU through exclusive, time-limited partitions
+                                with automatic expiration. Built with OpenCL and
+                                designed to work across macOS, Linux, and
+                                Windows.
+                            </p>
+                            <div class="project-meta">
+                                <span class="lang-pill"
+                                    ><span
+                                        class="lang-dot"
+                                        style="background: #f34b7d"
+                                    ></span
+                                    >C++ / Python</span
+                                >
+                                <span class="meta-pill">Apache 2.0</span>
+                                <span class="meta-pill">PyPI: chronos-gpu</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="license-note"
+                                    >59.1% C++ · 24% Python</span
+                                >
+                                <div class="stats">
+                                    <span>⭐ 28</span>
+                                    <span>🔱 4</span>
+                                    <span>updated recently</span>
+                                    <span>GPU scheduling</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card project-featured reveal">
+                            <a
+                                class="repo-link"
+                                href="https://github.com/Oabraham1/stacked-seds"
+                                target="_blank"
+                                rel="noreferrer"
+                                >stacked-seds</a
+                            >
+                            <p>
+                                A Python package for stacking faint galaxy
+                                images across broadband filters and preparing
+                                them for Spectral Energy Distribution analysis.
+                                Includes robust stacking, MAD-based error
+                                propagation, radial photometry, and
+                                publication-ready plots.
+                            </p>
+                            <div class="project-meta">
+                                <span class="lang-pill"
+                                    ><span
+                                        class="lang-dot"
+                                        style="background: #3572a5"
+                                    ></span
+                                    >Python</span
+                                >
+                                <span class="meta-pill">MIT</span>
+                                <span class="meta-pill"
+                                    >Franklin &amp; Marshall College</span
+                                >
+                            </div>
+                            <div class="card-footer">
+                                <span class="license-note">96.4% Python</span>
+                                <div class="stats">
+                                    <span>⭐ 11</span>
+                                    <span>🔱 1</span>
+                                    <span>updated recently</span>
+                                    <span>astrophysics tooling</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card project-featured reveal">
+                            <a
+                                class="repo-link"
+                                href="https://github.com/Oabraham1/jikan"
+                                target="_blank"
+                                rel="noreferrer"
+                                >jikan</a
+                            >
+                            <p>
+                                Change Data Capture that just works. Built in
+                                Rust to stream every insert, update, and delete
+                                from your database in real time, reliably, and
+                                without infrastructure dependencies, grounded in
+                                Lamport and Chandy-Lamport theory.
+                            </p>
+                            <div class="project-meta">
+                                <span class="lang-pill"
+                                    ><span
+                                        class="lang-dot"
+                                        style="background: #dea584"
+                                    ></span
+                                    >Rust</span
+                                >
+                                <span class="meta-pill">Apache 2.0</span>
+                                <span class="meta-pill">Pre-alpha</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="license-note"
+                                    >100% Rust · building in public</span
+                                >
+                                <div class="stats">
+                                    <span>⭐ 1</span>
+                                    <span>🔱 0</span>
+                                    <span>updated recently</span>
+                                    <span>real-time CDC</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card project-featured reveal">
+                            <a
+                                class="repo-link"
+                                href="https://github.com/Oabraham1/wave"
+                                target="_blank"
+                                rel="noreferrer"
+                                >wave</a
+                            >
+                            <p>
+                                The WAVE (Wide Architecture Virtual Encoding)
+                                toolchain. A vendor-neutral GPU instruction set
+                                architecture with assembler, disassembler, and
+                                emulator. Targeting NVIDIA, AMD, Intel, and
+                                Apple GPUs.
+                            </p>
+                            <div class="project-meta">
+                                <span class="lang-pill"
+                                    ><span
+                                        class="lang-dot"
+                                        style="background: #dea584"
+                                    ></span
+                                    >Rust</span
+                                >
+                                <span class="meta-pill">Apache 2.0</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="license-note">100% Rust</span>
+                                <div class="stats">
+                                    <span>⭐ 0</span>
+                                    <span>🔱 0</span>
+                                    <span>updated recently</span>
+                                    <span>GPU toolchain</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div
+                        class="heatmap-block reveal"
+                        aria-label="Recent contributions heatmap"
+                    >
+                        <div class="heatmap-label">Recent contributions</div>
+                        <div class="heatmap" id="heatmap"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="publications">
+                <div class="container">
+                    <header class="section-header reveal">
+                        <div class="section-kicker mono">// publications</div>
+                        <h2 class="section-title">
+                            Publications &amp; Research
+                        </h2>
+                        <p class="section-description">
+                            Selected publications spanning mathematics and
+                            astrophysics, with the full record available on
+                            Google Scholar.
+                        </p>
+                    </header>
+
+                    <!-- PUBLICATIONS: Edit your publications below -->
+                    <div class="research-list">
+                        <!-- UPDATE: Add arXiv URL once available -->
+                        <div class="year-group reveal">
+                            <article class="publication">
+                                <div class="publication-year mono">2026</div>
+                                <div>
+                                    <a
+                                        class="publication-title"
+                                        href="#"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        >Toward a Universal GPU Instruction Set
+                                        Architecture: A Cross-Vendor Analysis of
+                                        Hardware-Invariant Computational
+                                        Primitives in Parallel Processors</a
+                                    >
+                                    <div class="publication-venue">
+                                        arXiv preprint (cs.DC)
+                                    </div>
+                                    <div class="publication-authors">
+                                        <strong>Ojima Abraham</strong>, Onyinye
+                                        Okoli
+                                    </div>
+                                    <div class="publication-note">
+                                        Defines an abstract execution model,
+                                        register model, memory model, and
+                                        instruction set derived from
+                                        hardware-invariant primitives across
+                                        NVIDIA, AMD, Intel, and Apple GPU
+                                        architectures.
+                                    </div>
+                                    <div class="publication-links">
+                                        <a
+                                            class="link-pill"
+                                            href="#"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >arXiv</a
+                                        >
+                                        <a
+                                            class="link-pill"
+                                            href="https://doi.org/10.5281/zenodo.19163452"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >Zenodo</a
+                                        >
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="year-group reveal">
+                            <article class="publication">
+                                <div class="publication-year mono">2025</div>
+                                <div>
+                                    <a
+                                        class="publication-title"
+                                        href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:d1gkVwhDpl0C"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        >CECILIA: The Mass-Metallicity Relation
+                                        of Low-Mass Galaxies at Cosmic Noon</a
+                                    >
+                                    <div class="publication-venue">
+                                        arXiv preprint (arXiv:2512.00162),
+                                        submitted Nov 2025
+                                    </div>
+                                    <div class="publication-authors">
+                                        Menelaos Raptis, Gwen C. Rudie, Ryan F.
+                                        Trainor, Noah S. J. Rogers, Allison L.
+                                        Strom, Nathalie A. Korhonen Cuestas,
+                                        Caroline von Raesfeld, Ye Lin,
+                                        <strong>Ojima Ojodomo Abraham</strong>,
+                                        Christopher Chapman, Charles C. Steidel,
+                                        Michael V. Maseda
+                                    </div>
+                                    <div class="publication-note">
+                                        Uses ultra-deep JWST/NIRSpec
+                                        spectroscopy to study low-mass galaxies
+                                        at z~2-3.
+                                    </div>
+                                    <div class="publication-links">
+                                        <a
+                                            class="link-pill"
+                                            href="https://arxiv.org/pdf/2512.00162"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >PDF</a
+                                        >
+                                        <a
+                                            class="link-pill"
+                                            href="https://arxiv.org/abs/2512.00162"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >arXiv</a
+                                        >
+                                        <a
+                                            class="link-pill"
+                                            href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:d1gkVwhDpl0C"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >Scholar</a
+                                        >
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="year-group reveal">
+                            <article class="publication">
+                                <div class="publication-year mono">2023</div>
+                                <div>
+                                    <a
+                                        class="publication-title"
+                                        href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:u-x6o8ySG0sC"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        >Perspectives Through a Two-Slit
+                                        Camera</a
+                                    >
+                                    <div class="publication-venue">
+                                        The Mathematical Intelligencer, Volume
+                                        45, pp. 299-306 (Springer)
+                                    </div>
+                                    <div class="publication-authors">
+                                        Annalisa Crannell,
+                                        <strong>Ojima Abraham</strong>, Jihang
+                                        Dai, Yike Gong, Rebecca McClain, Nithya
+                                        Ramaswamy, Charles Reisner, Evan Shinn,
+                                        Shen Wang
+                                    </div>
+                                    <div class="publication-note">
+                                        Department of Mathematics, Franklin
+                                        &amp; Marshall College. Open access
+                                        under CC BY 4.0.
+                                    </div>
+                                    <div class="publication-links">
+                                        <a
+                                            class="link-pill"
+                                            href="https://link.springer.com/content/pdf/10.1007/s00283-022-10238-2.pdf"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >PDF</a
+                                        >
+                                        <a
+                                            class="link-pill"
+                                            href="https://doi.org/10.1007/s00283-022-10238-2"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >DOI</a
+                                        >
+                                        <a
+                                            class="link-pill"
+                                            href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:u-x6o8ySG0sC"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            >Scholar</a
+                                        >
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="scholar-cta reveal">
+                        <a
+                            href="https://scholar.google.com/citations?user=8QdVQbQAAAAJ&hl=en&oi=ao"
+                            target="_blank"
+                            rel="noreferrer"
+                            >View all on Google Scholar →</a
+                        >
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="spec">
+                <div class="container">
+                    <header class="section-header reveal">
+                        <div class="section-kicker mono">// the-spec</div>
+                        <h2
+                            class="section-title"
+                            style="font-size: clamp(1.8rem, 3vw, 2.2rem)"
+                        >
+                            The WAVE Specification
+                        </h2>
+                    </header>
+
+                    <!-- SPEC: The WAVE Specification content -->
+                    <div class="spec-shell">
+                        <article class="spec-card reveal">
+                            <div class="spec-top">
+                                <div>
+                                    <h3 class="spec-title">
+                                        The WAVE Specification
+                                    </h3>
+                                    <p
+                                        style="
+                                            margin-top: 0.25rem;
+                                            color: var(--text-secondary);
+                                            font-style: italic;
+                                        "
+                                    >
+                                        Wide Architecture Virtual Encoding
+                                    </p>
+                                </div>
+                                <span class="version-badge"
+                                    ><span class="status-dot"></span>v0.3 —
+                                    Working Draft (Revised)</span
+                                >
+                            </div>
+                            <p class="spec-abstract">
+                                A vendor-neutral instruction set architecture
+                                for general-purpose GPU computation. Defines an
+                                abstract execution model, register model, memory
+                                model, structured control flow, and instruction
+                                set derived from eleven hardware-invariant
+                                primitives identified across NVIDIA, AMD, Intel,
+                                and Apple GPU architectures spanning 16
+                                microarchitectures. Follows the thin abstraction
+                                principle: defines what a compliant
+                                implementation must do, not how. Validated by a
+                                reference implementation with 102 passing
+                                conformance tests.
+                            </p>
+                            <div class="spec-meta">
+                                <span class="meta-pill"
+                                    >Status: Working Draft</span
+                                >
+                                <span class="meta-pill"
+                                    >Last Updated: March 29, 2026</span
+                                >
+                                <span class="meta-pill"
+                                    >License: Apache 2.0</span
+                                >
+                                <span class="meta-pill"
+                                    >Authors: Ojima Abraham, Onyinye Okoli</span
+                                >
+                            </div>
+                            <div class="spec-actions">
+                                <a
+                                    class="button button-primary"
+                                    href="spec.html"
+                                    >Read the Spec →</a
+                                >
+                                <a
+                                    class="button button-secondary"
+                                    href="https://github.com/Oabraham1/wave"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    >View on GitHub</a
+                                >
+                            </div>
+                        </article>
+
+                        <div class="spec-toc-panel reveal">
+                            <h3 class="spec-toc-title mono">
+                                Table of Contents
+                            </h3>
+                            <div class="spec-toc">
+                                <a href="spec.html#v03-section-1"
+                                    ><strong>1.</strong> Introduction</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-1-1"
+                                    ><strong>1.1</strong> Purpose</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-1-2"
+                                    ><strong>1.2</strong> Scope</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-1-3"
+                                    ><strong>1.3</strong> Design Principles</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-1-4"
+                                    ><strong>1.4</strong> Relationship to Other
+                                    Standards</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-1-5"
+                                    ><strong>1.5</strong> Changes from v0.2</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-1-6"
+                                    ><strong>1.6</strong> Changes from v0.1</a
+                                >
+                                <a href="spec.html#v03-section-2"
+                                    ><strong>2.</strong> Execution Model</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-2-1"
+                                    ><strong>2.1</strong> Overview</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-2-2"
+                                    ><strong>2.2</strong> Thread Hierarchy</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-2-3"
+                                    ><strong>2.3</strong> Thread Identifiers</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-2-4"
+                                    ><strong>2.4</strong> Core Resources</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-2-5"
+                                    ><strong>2.5</strong> Execution
+                                    Guarantees</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-2-6"
+                                    ><strong>2.6</strong> Dispatch</a
+                                >
+                                <a href="spec.html#v03-section-3"
+                                    ><strong>3.</strong> Register Model</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-3-1"
+                                    ><strong>3.1</strong> General-Purpose
+                                    Registers</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-3-2"
+                                    ><strong>3.2</strong> Sub-Register Access</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-3-3"
+                                    ><strong>3.3</strong> Register Pairs</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-3-4"
+                                    ><strong>3.4</strong> Special Registers</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-3-5"
+                                    ><strong>3.5</strong> Predicate Registers</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-3-6"
+                                    ><strong>3.6</strong> Allocation and
+                                    Occupancy</a
+                                >
+                                <a href="spec.html#v03-section-4"
+                                    ><strong>4.</strong> Memory Model</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-4-1"
+                                    ><strong>4.1</strong> Memory Spaces</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-4-2"
+                                    ><strong>4.2</strong> Local Memory
+                                    Details</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-4-3"
+                                    ><strong>4.3</strong> Device Memory
+                                    Details</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-4-4"
+                                    ><strong>4.4</strong> Memory Ordering</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-4-5"
+                                    ><strong>4.5</strong> Atomic Operations</a
+                                >
+                                <a href="spec.html#v03-section-5"
+                                    ><strong>5.</strong> Control Flow</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-5-1"
+                                    ><strong>5.1</strong> Structured Control
+                                    Flow</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-5-2"
+                                    ><strong>5.2</strong> Uniform Branches</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-5-3"
+                                    ><strong>5.3</strong> Divergence and
+                                    Reconvergence</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-5-4"
+                                    ><strong>5.4</strong> Minimum Divergence
+                                    Depth</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-5-5"
+                                    ><strong>5.5</strong> Per-Wave Control Flow
+                                    State</a
+                                >
+                                <a href="spec.html#v03-section-6"
+                                    ><strong>6.</strong> Instruction Set</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-1"
+                                    ><strong>6.1</strong> Integer Arithmetic</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-2"
+                                    ><strong>6.2</strong> Bitwise Operations</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-3"
+                                    ><strong>6.3</strong> Floating-Point
+                                    (F32)</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-4"
+                                    ><strong>6.4</strong> Floating-Point
+                                    (F16)</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-5"
+                                    ><strong>6.5</strong> Floating-Point (F64,
+                                    Optional)</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-6"
+                                    ><strong>6.6</strong> Type Conversion</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-7"
+                                    ><strong>6.7</strong> Comparison and
+                                    Select</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-8"
+                                    ><strong>6.8</strong> Local Memory
+                                    Operations</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-9"
+                                    ><strong>6.9</strong> Device Memory
+                                    Operations</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-10"
+                                    ><strong>6.10</strong> Atomic Operations</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-11"
+                                    ><strong>6.11</strong> Wave Operations</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-12"
+                                    ><strong>6.12</strong> Synchronization</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-13"
+                                    ><strong>6.13</strong> Control Flow
+                                    Instructions</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-6-14"
+                                    ><strong>6.14</strong> Matrix
+                                    Multiply-Accumulate (Optional)</a
+                                >
+                                <a href="spec.html#v03-section-7"
+                                    ><strong>7.</strong> Capability System</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-7-1"
+                                    ><strong>7.1</strong> Required Constants</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-7-2"
+                                    ><strong>7.2</strong> Optional
+                                    Capabilities</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-7-3"
+                                    ><strong>7.3</strong> Matrix MMA
+                                    Parameters</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-7-4"
+                                    ><strong>7.4</strong> Query Mechanism</a
+                                >
+                                <a href="spec.html#v03-section-8"
+                                    ><strong>8.</strong> Binary Encoding</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-8-1"
+                                    ><strong>8.1</strong> Overview</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-8-2"
+                                    ><strong>8.2</strong> Base Instruction
+                                    Format (48-bit)</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-8-3"
+                                    ><strong>8.3</strong> Extended Instruction
+                                    Format (80-bit)</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-8-4"
+                                    ><strong>8.4</strong> Opcode Map</a
+                                >
+                                <a href="spec.html#v03-section-9"
+                                    ><strong>9.</strong> Conformance</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-9-1"
+                                    ><strong>9.1</strong> Required Behavior</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-9-2"
+                                    ><strong>9.2</strong> Implementation-Defined
+                                    Behavior</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-9-3"
+                                    ><strong>9.3</strong> Undefined Behavior</a
+                                >
+                                <a class="sub" href="spec.html#v03-section-9-4"
+                                    ><strong>9.4</strong> Conformance Testing</a
+                                >
+                                <a href="spec.html#v03-appendix-a"
+                                    ><strong>A.</strong> Full Opcode Table</a
+                                >
+                                <a href="spec.html#v03-appendix-b"
+                                    ><strong>B.</strong> Vendor Mapping
+                                    Reference</a
+                                >
+                                <a href="spec.html#v03-appendix-c"
+                                    ><strong>C.</strong> Revision History</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="press">
+                <div class="container">
+                    <header class="section-header reveal">
+                        <div class="section-kicker mono">// press</div>
+                        <h2 class="section-title">Press &amp; Coverage</h2>
+                        <p class="section-description">
+                            Selected interviews, features, and third-party
+                            coverage.
+                        </p>
+                    </header>
+
+                    <!-- PRESS: Edit your press coverage entries below -->
+                    <div class="press-list">
+                        <a
+                            class="press-link reveal"
+                            href="https://businessday.ng/bd-weekender/article/empowering-the-under-resourced-nigerian-engineer-builds-tools-to-compete-on-the-global-ai-stage/"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <div class="press-icon" aria-hidden="true">BD</div>
+                            <div>
+                                <div class="press-title">
+                                    Empowering the Under-Resourced: Nigerian
+                                    Engineer Builds Tools to Compete on the
+                                    Global AI Stage
+                                </div>
+                                <div class="press-meta">
+                                    <strong>BusinessDay</strong> · December 2025
+                                </div>
+                                <div class="press-blurb">
+                                    A feature profile on Ojima's open-source
+                                    work spanning chronos, stacked-seds, and
+                                    accessible high-performance computing.
+                                </div>
+                            </div>
+                            <div class="press-arrow" aria-hidden="true">↗</div>
+                        </a>
+
+                        <a
+                            class="press-link reveal"
+                            href="https://dailytrust.com/opportunity-funds-scholar-makes-strides-in-high-performance-computing-systems-engineering/"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <div class="press-icon" aria-hidden="true">DT</div>
+                            <div>
+                                <div class="press-title">
+                                    Opportunity Funds Scholar Makes Strides in
+                                    High-Performance Computing, Systems
+                                    Engineering
+                                </div>
+                                <div class="press-meta">
+                                    <strong>Daily Trust</strong> · 2025
+                                </div>
+                                <div class="press-blurb">
+                                    Covers Ojima's path from Opportunity Funds
+                                    scholar to contributions in HPC and systems
+                                    engineering.
+                                </div>
+                            </div>
+                            <div class="press-arrow" aria-hidden="true">↗</div>
+                        </a>
+                    </div>
+                    <!-- PRESS: Add more coverage here as it comes -->
+                </div>
+            </section>
+
+            <section class="section" id="about">
+                <div class="container">
+                    <header class="section-header reveal">
+                        <div class="section-kicker mono">// about</div>
+                        <h2 class="section-title">About &amp; Contact</h2>
+                    </header>
+
+                    <div class="about-grid">
+                        <article class="about-card reveal">
+                            <!-- BIO: Edit your short bio below -->
+                            <p>
+                                Software engineer at Kalshi. Expert in
+                                distributed systems, systems performance,
+                                low-level programming, compiler and interpreter
+                                design, parallel programming, and
+                                high-performance computing. Based in Brooklyn,
+                                New York.
+                            </p>
+                            <div class="about-meta">
+                                ORCID:
+                                <a
+                                    href="https://orcid.org/0009-0005-8667-4771"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    >0009-0005-8667-4771</a
+                                >
+                            </div>
+                        </article>
+
+                        <article class="about-card reveal">
+                            <!-- CONTACT LINKS: Edit your contact links below -->
+                            <div class="contact-links">
+                                <a
+                                    href="https://github.com/Oabraham1"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    >GitHub →</a
+                                >
+                                <a
+                                    href="https://scholar.google.com/citations?user=8QdVQbQAAAAJ&hl=en&oi=ao"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    >Scholar →</a
+                                >
+                                <a
+                                    href="https://ojimaabraham.substack.com"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    >Substack →</a
+                                >
+                                <a
+                                    href="https://www.linkedin.com/in/ojima-abraham/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    >LinkedIn →</a
+                                >
+                                <a
+                                    href="https://x.com/chef_jiggy"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    >X →</a
+                                >
+                            </div>
+                            <div class="colophon">
+                                Zero dependencies. Just HTML, CSS &amp; JS.
+                                Hosted on GitHub Pages.
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <hr class="footer-rule" />
+                <div class="footer-copy">© 2026 Ojima Abraham</div>
             </div>
+        </footer>
 
-            <aside class="hero-panel reveal">
-              <h2>// active areas</h2>
-              <p>
-                Building systems that push closer to the machine: distributed infrastructure, GPU scheduling, CDC pipelines, and scientific computing tools.
-              </p>
-              <div class="signal-list">
-                <div class="signal-item">
-                  <div class="signal-label">current</div>
-                  <div class="signal-value">Distributed systems, systems performance, parallel programming, and HPC access for under-resourced builders</div>
-                </div>
-                <div class="signal-item">
-                  <div class="signal-label">writing</div>
-                  <div class="signal-value">Protocol notes, implementation writeups, and research threads spanning CDC, interpreters, and astrophysics tooling</div>
-                </div>
-                <div class="signal-item">
-                  <div class="signal-label">bias</div>
-                  <div class="signal-value">Precise interfaces, low overhead abstractions, readable internals, and software that respects hardware realities</div>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </section>
+        <script>
+            const nav = document.querySelector(".site-nav");
+            const navToggle = document.querySelector(".nav-toggle");
+            const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+            const sections = Array.from(
+                document.querySelectorAll("main section[id]"),
+            );
+            const revealNodes = Array.from(
+                document.querySelectorAll(".reveal"),
+            );
+            const heatmap = document.getElementById("heatmap");
 
-      <section class="section" id="open-source">
-        <div class="container">
-          <header class="section-header reveal">
-            <div class="section-kicker mono">// open-source</div>
-            <h2 class="section-title">Open Source</h2>
-            <p class="section-description">Projects I've built and contribute to.</p>
-          </header>
+            revealNodes.forEach((node, index) => {
+                node.style.setProperty("--delay", `${(index % 10) * 70}ms`);
+            });
 
-          <!-- PROJECTS: Edit your projects below -->
-          <div class="projects-grid">
-            <article class="card project-featured reveal">
-              <a class="repo-link" href="https://github.com/Oabraham1/chronos" target="_blank" rel="noreferrer">chronos</a>
-              <p>
-                Time-based GPU partitioning utility that lets multiple users or applications share a single GPU through exclusive, time-limited partitions with automatic expiration. Built with OpenCL and designed to work across macOS, Linux, and Windows.
-              </p>
-              <div class="project-meta">
-                <span class="lang-pill"><span class="lang-dot" style="background:#f34b7d"></span>C++ / Python</span>
-                <span class="meta-pill">Apache 2.0</span>
-                <span class="meta-pill">PyPI: chronos-gpu</span>
-              </div>
-              <div class="card-footer">
-                <span class="license-note">59.1% C++ · 24% Python</span>
-                <div class="stats">
-                  <span>⭐ 28</span>
-                  <span>🔱 4</span>
-                  <span>updated recently</span>
-                  <span>GPU scheduling</span>
-                </div>
-              </div>
-            </article>
+            const revealObserver = new IntersectionObserver(
+                (entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    });
+                },
+                { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
+            );
 
-            <article class="card project-featured reveal">
-              <a class="repo-link" href="https://github.com/Oabraham1/stacked-seds" target="_blank" rel="noreferrer">stacked-seds</a>
-              <p>
-                A Python package for stacking faint galaxy images across broadband filters and preparing them for Spectral Energy Distribution analysis. Includes robust stacking, MAD-based error propagation, radial photometry, and publication-ready plots.
-              </p>
-              <div class="project-meta">
-                <span class="lang-pill"><span class="lang-dot" style="background:#3572A5"></span>Python</span>
-                <span class="meta-pill">MIT</span>
-                <span class="meta-pill">Franklin &amp; Marshall College</span>
-              </div>
-              <div class="card-footer">
-                <span class="license-note">96.4% Python</span>
-                <div class="stats">
-                  <span>⭐ 11</span>
-                  <span>🔱 1</span>
-                  <span>updated recently</span>
-                  <span>astrophysics tooling</span>
-                </div>
-              </div>
-            </article>
+            revealNodes.forEach((node) => revealObserver.observe(node));
 
-            <article class="card project-featured reveal">
-              <a class="repo-link" href="https://github.com/Oabraham1/jikan" target="_blank" rel="noreferrer">jikan</a>
-              <p>
-                Change Data Capture that just works. Built in Rust to stream every insert, update, and delete from your database in real time, reliably, and without infrastructure dependencies, grounded in Lamport and Chandy-Lamport theory.
-              </p>
-              <div class="project-meta">
-                <span class="lang-pill"><span class="lang-dot" style="background:#dea584"></span>Rust</span>
-                <span class="meta-pill">Apache 2.0</span>
-                <span class="meta-pill">Pre-alpha</span>
-              </div>
-              <div class="card-footer">
-                <span class="license-note">100% Rust · building in public</span>
-                <div class="stats">
-                  <span>⭐ 1</span>
-                  <span>🔱 0</span>
-                  <span>updated recently</span>
-                  <span>real-time CDC</span>
-                </div>
-              </div>
-            </article>
+            const setActiveLink = (id) => {
+                navLinks.forEach((link) => {
+                    const active = link.getAttribute("href") === `#${id}`;
+                    link.classList.toggle("is-active", active);
+                });
+            };
 
-            <article class="card project-featured reveal">
-              <a class="repo-link" href="https://github.com/Oabraham1/wave" target="_blank" rel="noreferrer">wave</a>
-              <p>
-                The WAVE (Wide Architecture Virtual Encoding) toolchain. A vendor-neutral GPU instruction set architecture with assembler, disassembler, and emulator. Targeting NVIDIA, AMD, Intel, and Apple GPUs.
-              </p>
-              <div class="project-meta">
-                <span class="lang-pill"><span class="lang-dot" style="background:#dea584"></span>Rust</span>
-                <span class="meta-pill">Apache 2.0</span>
-              </div>
-              <div class="card-footer">
-                <span class="license-note">100% Rust</span>
-                <div class="stats">
-                  <span>⭐ 0</span>
-                  <span>🔱 0</span>
-                  <span>updated recently</span>
-                  <span>GPU toolchain</span>
-                </div>
-              </div>
-            </article>
-          </div>
+            const sectionObserver = new IntersectionObserver(
+                (entries) => {
+                    const visible = entries
+                        .filter((entry) => entry.isIntersecting)
+                        .sort(
+                            (a, b) => b.intersectionRatio - a.intersectionRatio,
+                        )[0];
 
-          <div class="heatmap-block reveal" aria-label="Recent contributions heatmap">
-            <div class="heatmap-label">Recent contributions</div>
-            <div class="heatmap" id="heatmap"></div>
-          </div>
-        </div>
-      </section>
+                    if (visible) {
+                        setActiveLink(visible.target.id);
+                    }
+                },
+                {
+                    threshold: [0.2, 0.35, 0.55],
+                    rootMargin: "-20% 0px -45% 0px",
+                },
+            );
 
-      <section class="section" id="publications">
-        <div class="container">
-          <header class="section-header reveal">
-            <div class="section-kicker mono">// publications</div>
-            <h2 class="section-title">Publications &amp; Research</h2>
-            <p class="section-description">Selected publications spanning mathematics and astrophysics, with the full record available on Google Scholar.</p>
-          </header>
+            sections.forEach((section) => sectionObserver.observe(section));
 
-          <!-- PUBLICATIONS: Edit your publications below -->
-          <div class="research-list">
-            <!-- UPDATE: Add arXiv URL once available -->
-            <div class="year-group reveal">
-              <article class="publication">
-                <div class="publication-year mono">2026</div>
-                <div>
-                  <a class="publication-title" href="#" target="_blank" rel="noreferrer">Toward a Universal GPU Instruction Set Architecture: A Cross-Vendor Analysis of Hardware-Invariant Computational Primitives in Parallel Processors</a>
-                  <div class="publication-venue">arXiv preprint (cs.DC)</div>
-                  <div class="publication-authors"><strong>Ojima Abraham</strong>, Onyinye Okoli</div>
-                  <div class="publication-note">Defines an abstract execution model, register model, memory model, and instruction set derived from hardware-invariant primitives across NVIDIA, AMD, Intel, and Apple GPU architectures.</div>
-                  <div class="publication-links">
-                    <a class="link-pill" href="#" target="_blank" rel="noreferrer">arXiv</a>
-                    <a class="link-pill" href="https://doi.org/10.5281/zenodo.19163452" target="_blank" rel="noreferrer">Zenodo</a>
-                  </div>
-                </div>
-              </article>
-            </div>
+            navLinks.forEach((link) => {
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const target = document.querySelector(
+                        link.getAttribute("href"),
+                    );
+                    if (!target) return;
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                    nav.classList.remove("is-open");
+                    navToggle.setAttribute("aria-expanded", "false");
+                });
+            });
 
-            <div class="year-group reveal">
-              <article class="publication">
-                <div class="publication-year mono">2025</div>
-                <div>
-                  <a class="publication-title" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:d1gkVwhDpl0C" target="_blank" rel="noreferrer">CECILIA: The Mass-Metallicity Relation of Low-Mass Galaxies at Cosmic Noon</a>
-                  <div class="publication-venue">arXiv preprint (arXiv:2512.00162), submitted Nov 2025</div>
-                  <div class="publication-authors">Menelaos Raptis, Gwen C. Rudie, Ryan F. Trainor, Noah S. J. Rogers, Allison L. Strom, Nathalie A. Korhonen Cuestas, Caroline von Raesfeld, Ye Lin, <strong>Ojima Ojodomo Abraham</strong>, Christopher Chapman, Charles C. Steidel, Michael V. Maseda</div>
-                  <div class="publication-note">Uses ultra-deep JWST/NIRSpec spectroscopy to study low-mass galaxies at z~2-3.</div>
-                  <div class="publication-links">
-                    <a class="link-pill" href="https://arxiv.org/pdf/2512.00162" target="_blank" rel="noreferrer">PDF</a>
-                    <a class="link-pill" href="https://arxiv.org/abs/2512.00162" target="_blank" rel="noreferrer">arXiv</a>
-                    <a class="link-pill" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:d1gkVwhDpl0C" target="_blank" rel="noreferrer">Scholar</a>
-                  </div>
-                </div>
-              </article>
-            </div>
+            navToggle.addEventListener("click", () => {
+                const expanded =
+                    navToggle.getAttribute("aria-expanded") === "true";
+                navToggle.setAttribute("aria-expanded", String(!expanded));
+                nav.classList.toggle("is-open", !expanded);
+            });
 
-            <div class="year-group reveal">
-              <article class="publication">
-                <div class="publication-year mono">2023</div>
-                <div>
-                  <a class="publication-title" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:u-x6o8ySG0sC" target="_blank" rel="noreferrer">Perspectives Through a Two-Slit Camera</a>
-                  <div class="publication-venue">The Mathematical Intelligencer, Volume 45, pp. 299-306 (Springer)</div>
-                  <div class="publication-authors">Annalisa Crannell, <strong>Ojima Abraham</strong>, Jihang Dai, Yike Gong, Rebecca McClain, Nithya Ramaswamy, Charles Reisner, Evan Shinn, Shen Wang</div>
-                  <div class="publication-note">Department of Mathematics, Franklin &amp; Marshall College. Open access under CC BY 4.0.</div>
-                  <div class="publication-links">
-                    <a class="link-pill" href="https://link.springer.com/content/pdf/10.1007/s00283-022-10238-2.pdf" target="_blank" rel="noreferrer">PDF</a>
-                    <a class="link-pill" href="https://doi.org/10.1007/s00283-022-10238-2" target="_blank" rel="noreferrer">DOI</a>
-                    <a class="link-pill" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=8QdVQbQAAAAJ&citation_for_view=8QdVQbQAAAAJ:u-x6o8ySG0sC" target="_blank" rel="noreferrer">Scholar</a>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-          <div class="scholar-cta reveal">
-            <a href="https://scholar.google.com/citations?user=8QdVQbQAAAAJ&hl=en&oi=ao" target="_blank" rel="noreferrer">View all on Google Scholar →</a>
-          </div>
-        </div>
-      </section>
+            document.addEventListener("click", (event) => {
+                if (!nav.contains(event.target)) {
+                    nav.classList.remove("is-open");
+                    navToggle.setAttribute("aria-expanded", "false");
+                }
+            });
 
-      <section class="section" id="spec">
-        <div class="container">
-          <header class="section-header reveal">
-            <div class="section-kicker mono">// the-spec</div>
-            <h2 class="section-title" style="font-size: clamp(1.8rem, 3vw, 2.2rem);">The WAVE Specification</h2>
-          </header>
+            const handleScrollState = () => {
+                nav.classList.toggle("is-scrolled", window.scrollY > 12);
+            };
 
-          <!-- SPEC: The WAVE Specification content -->
-          <div class="spec-shell">
-            <article class="spec-card reveal">
-              <div class="spec-top">
-                <div>
-                  <h3 class="spec-title">The WAVE Specification</h3>
-                  <p style="margin-top: 0.25rem; color: var(--text-secondary); font-style: italic;">Wide Architecture Virtual Encoding</p>
-                </div>
-                <span class="version-badge"><span class="status-dot"></span>v0.2 — Working Draft (Revised)</span>
-              </div>
-              <p class="spec-abstract">
-                A vendor-neutral instruction set architecture for general-purpose GPU computation. Defines an abstract execution model, register model, memory model, structured control flow, and instruction set derived from eleven hardware-invariant primitives identified across NVIDIA, AMD, Intel, and Apple GPU architectures spanning 16 microarchitectures. Follows the thin abstraction principle: defines what a compliant implementation must do, not how. Validated by a reference implementation with 102 passing conformance tests.
-              </p>
-              <div class="spec-meta">
-                <span class="meta-pill">Status: Working Draft</span>
-                <span class="meta-pill">Last Updated: March 23, 2026</span>
-                <span class="meta-pill">License: Apache 2.0</span>
-                <span class="meta-pill">Authors: Ojima Abraham, Onyinye Okoli</span>
-              </div>
-              <div class="spec-actions">
-                <a class="button button-primary" href="spec.html">Read the Spec →</a>
-                <a class="button button-secondary" href="https://github.com/Oabraham1/wave" target="_blank" rel="noreferrer">View on GitHub</a>
-              </div>
-            </article>
+            handleScrollState();
+            window.addEventListener("scroll", handleScrollState, {
+                passive: true,
+            });
 
-            <div class="spec-toc-panel reveal">
-              <h3 class="spec-toc-title mono">Table of Contents</h3>
-              <div class="spec-toc">
-                <a href="spec.html#section-1"><strong>1.</strong> Introduction</a>
-                <a class="sub" href="spec.html#section-1-1"><strong>1.1</strong> Purpose</a>
-                <a class="sub" href="spec.html#section-1-2"><strong>1.2</strong> Scope</a>
-                <a class="sub" href="spec.html#section-1-3"><strong>1.3</strong> Design Principles</a>
-                <a class="sub" href="spec.html#section-1-4"><strong>1.4</strong> Relationship to Other Standards</a>
-                <a class="sub" href="spec.html#section-1-5"><strong>1.5</strong> Changes from v0.1</a>
-                <a href="spec.html#section-2"><strong>2.</strong> Execution Model</a>
-                <a class="sub" href="spec.html#section-2-1"><strong>2.1</strong> Overview</a>
-                <a class="sub" href="spec.html#section-2-2"><strong>2.2</strong> Thread Hierarchy</a>
-                <a class="sub" href="spec.html#section-2-3"><strong>2.3</strong> Thread Identifiers</a>
-                <a class="sub" href="spec.html#section-2-4"><strong>2.4</strong> Core Resources</a>
-                <a class="sub" href="spec.html#section-2-5"><strong>2.5</strong> Execution Guarantees</a>
-                <a class="sub" href="spec.html#section-2-6"><strong>2.6</strong> Dispatch</a>
-                <a href="spec.html#section-3"><strong>3.</strong> Register Model</a>
-                <a class="sub" href="spec.html#section-3-1"><strong>3.1</strong> General-Purpose Registers</a>
-                <a class="sub" href="spec.html#section-3-2"><strong>3.2</strong> Sub-Register Access</a>
-                <a class="sub" href="spec.html#section-3-3"><strong>3.3</strong> Register Pairs</a>
-                <a class="sub" href="spec.html#section-3-4"><strong>3.4</strong> Special Registers</a>
-                <a class="sub" href="spec.html#section-3-5"><strong>3.5</strong> Predicate Registers</a>
-                <a class="sub" href="spec.html#section-3-6"><strong>3.6</strong> Allocation and Occupancy</a>
-                <a href="spec.html#section-4"><strong>4.</strong> Memory Model</a>
-                <a class="sub" href="spec.html#section-4-1"><strong>4.1</strong> Memory Spaces</a>
-                <a class="sub" href="spec.html#section-4-2"><strong>4.2</strong> Local Memory Details</a>
-                <a class="sub" href="spec.html#section-4-3"><strong>4.3</strong> Device Memory Details</a>
-                <a class="sub" href="spec.html#section-4-4"><strong>4.4</strong> Memory Ordering</a>
-                <a class="sub" href="spec.html#section-4-5"><strong>4.5</strong> Atomic Operations</a>
-                <a href="spec.html#section-5"><strong>5.</strong> Control Flow</a>
-                <a class="sub" href="spec.html#section-5-1"><strong>5.1</strong> Structured Control Flow</a>
-                <a class="sub" href="spec.html#section-5-2"><strong>5.2</strong> Uniform Branches</a>
-                <a class="sub" href="spec.html#section-5-3"><strong>5.3</strong> Divergence and Reconvergence</a>
-                <a class="sub" href="spec.html#section-5-4"><strong>5.4</strong> Minimum Divergence Depth</a>
-                <a class="sub" href="spec.html#section-5-5"><strong>5.5</strong> Per-Wave Control Flow State</a>
-                <a href="spec.html#section-6"><strong>6.</strong> Instruction Set</a>
-                <a class="sub" href="spec.html#section-6-1"><strong>6.1</strong> Integer Arithmetic</a>
-                <a class="sub" href="spec.html#section-6-2"><strong>6.2</strong> Bitwise Operations</a>
-                <a class="sub" href="spec.html#section-6-3"><strong>6.3</strong> Floating-Point (F32)</a>
-                <a class="sub" href="spec.html#section-6-4"><strong>6.4</strong> Floating-Point (F16)</a>
-                <a class="sub" href="spec.html#section-6-5"><strong>6.5</strong> Floating-Point (F64, Optional)</a>
-                <a class="sub" href="spec.html#section-6-6"><strong>6.6</strong> Type Conversion</a>
-                <a class="sub" href="spec.html#section-6-7"><strong>6.7</strong> Comparison and Select</a>
-                <a class="sub" href="spec.html#section-6-8"><strong>6.8</strong> Local Memory Operations</a>
-                <a class="sub" href="spec.html#section-6-9"><strong>6.9</strong> Device Memory Operations</a>
-                <a class="sub" href="spec.html#section-6-10"><strong>6.10</strong> Atomic Operations</a>
-                <a class="sub" href="spec.html#section-6-11"><strong>6.11</strong> Wave Operations</a>
-                <a class="sub" href="spec.html#section-6-12"><strong>6.12</strong> Synchronization</a>
-                <a class="sub" href="spec.html#section-6-13"><strong>6.13</strong> Control Flow Instructions</a>
-                <a class="sub" href="spec.html#section-6-14"><strong>6.14</strong> Matrix Multiply-Accumulate (Optional)</a>
-                <a href="spec.html#section-7"><strong>7.</strong> Capability System</a>
-                <a class="sub" href="spec.html#section-7-1"><strong>7.1</strong> Required Constants</a>
-                <a class="sub" href="spec.html#section-7-2"><strong>7.2</strong> Optional Capabilities</a>
-                <a class="sub" href="spec.html#section-7-3"><strong>7.3</strong> Matrix MMA Parameters</a>
-                <a class="sub" href="spec.html#section-7-4"><strong>7.4</strong> Query Mechanism</a>
-                <a href="spec.html#section-8"><strong>8.</strong> Binary Encoding</a>
-                <a class="sub" href="spec.html#section-8-1"><strong>8.1</strong> Overview</a>
-                <a class="sub" href="spec.html#section-8-2"><strong>8.2</strong> Base Instruction Format (48-bit)</a>
-                <a class="sub" href="spec.html#section-8-3"><strong>8.3</strong> Extended Instruction Format (80-bit)</a>
-                <a class="sub" href="spec.html#section-8-4"><strong>8.4</strong> Opcode Map</a>
-                <a href="spec.html#section-9"><strong>9.</strong> Conformance</a>
-                <a class="sub" href="spec.html#section-9-1"><strong>9.1</strong> Required Behavior</a>
-                <a class="sub" href="spec.html#section-9-2"><strong>9.2</strong> Implementation-Defined Behavior</a>
-                <a class="sub" href="spec.html#section-9-3"><strong>9.3</strong> Undefined Behavior</a>
-                <a class="sub" href="spec.html#section-9-4"><strong>9.4</strong> Conformance Testing</a>
-                <a href="spec.html#appendix-a"><strong>A.</strong> Full Opcode Table</a>
-                <a href="spec.html#appendix-b"><strong>B.</strong> Vendor Mapping Reference</a>
-                <a href="spec.html#appendix-c"><strong>C.</strong> Revision History</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            const activityLevels = [
+                0.06, 0.12, 0.18, 0.28, 0.12, 0.2, 0.08, 0.1, 0.24, 0.32, 0.12,
+                0.36, 0.18, 0.06, 0.14, 0.08, 0.12, 0.22, 0.18, 0.26, 0.12,
+                0.32, 0.08, 0.1, 0.24, 0.16, 0.18, 0.3, 0.06, 0.12, 0.2, 0.36,
+                0.14, 0.1, 0.26, 0.3, 0.34, 0.16, 0.08, 0.18, 0.22, 0.12, 0.16,
+                0.3, 0.38, 0.18, 0.08, 0.16, 0.26, 0.06, 0.12, 0.28, 0.24, 0.18,
+                0.34, 0.12, 0.1, 0.14, 0.18, 0.3, 0.12, 0.08, 0.22, 0.24, 0.34,
+                0.12, 0.16, 0.28, 0.2, 0.1, 0.08, 0.18, 0.26, 0.16, 0.12, 0.22,
+                0.34, 0.1, 0.08, 0.2, 0.3, 0.16, 0.24, 0.12, 0.18, 0.28, 0.36,
+                0.12, 0.1, 0.26, 0.22, 0.12, 0.18, 0.24, 0.3, 0.14, 0.2, 0.08,
+                0.1, 0.16, 0.28, 0.34, 0.12, 0.18, 0.26, 0.06, 0.1, 0.2, 0.24,
+                0.14, 0.3, 0.18, 0.08, 0.16, 0.12, 0.34, 0.2, 0.1, 0.24, 0.18,
+                0.3, 0.38, 0.12, 0.08, 0.18, 0.26, 0.12, 0.2, 0.28, 0.16, 0.1,
+                0.24, 0.32, 0.06, 0.12, 0.22, 0.18, 0.14, 0.26, 0.36,
+            ];
 
-      <section class="section" id="press">
-        <div class="container">
-          <header class="section-header reveal">
-            <div class="section-kicker mono">// press</div>
-            <h2 class="section-title">Press &amp; Coverage</h2>
-            <p class="section-description">Selected interviews, features, and third-party coverage.</p>
-          </header>
-
-          <!-- PRESS: Edit your press coverage entries below -->
-          <div class="press-list">
-            <a class="press-link reveal" href="https://businessday.ng/bd-weekender/article/empowering-the-under-resourced-nigerian-engineer-builds-tools-to-compete-on-the-global-ai-stage/" target="_blank" rel="noreferrer">
-              <div class="press-icon" aria-hidden="true">BD</div>
-              <div>
-                <div class="press-title">Empowering the Under-Resourced: Nigerian Engineer Builds Tools to Compete on the Global AI Stage</div>
-                <div class="press-meta"><strong>BusinessDay</strong> · December 2025</div>
-                <div class="press-blurb">A feature profile on Ojima's open-source work spanning chronos, stacked-seds, and accessible high-performance computing.</div>
-              </div>
-              <div class="press-arrow" aria-hidden="true">↗</div>
-            </a>
-
-            <a class="press-link reveal" href="https://dailytrust.com/opportunity-funds-scholar-makes-strides-in-high-performance-computing-systems-engineering/" target="_blank" rel="noreferrer">
-              <div class="press-icon" aria-hidden="true">DT</div>
-              <div>
-                <div class="press-title">Opportunity Funds Scholar Makes Strides in High-Performance Computing, Systems Engineering</div>
-                <div class="press-meta"><strong>Daily Trust</strong> · 2025</div>
-                <div class="press-blurb">Covers Ojima's path from Opportunity Funds scholar to contributions in HPC and systems engineering.</div>
-              </div>
-              <div class="press-arrow" aria-hidden="true">↗</div>
-            </a>
-          </div>
-          <!-- PRESS: Add more coverage here as it comes -->
-        </div>
-      </section>
-
-      <section class="section" id="about">
-        <div class="container">
-          <header class="section-header reveal">
-            <div class="section-kicker mono">// about</div>
-            <h2 class="section-title">About &amp; Contact</h2>
-          </header>
-
-          <div class="about-grid">
-            <article class="about-card reveal">
-              <!-- BIO: Edit your short bio below -->
-              <p>
-                Software engineer at Kalshi. Expert in distributed systems, systems performance, low-level programming, compiler and interpreter design, parallel programming, and high-performance computing. Based in Brooklyn, New York.
-              </p>
-              <div class="about-meta">ORCID: <a href="https://orcid.org/0009-0005-8667-4771" target="_blank" rel="noreferrer">0009-0005-8667-4771</a></div>
-            </article>
-
-            <article class="about-card reveal">
-              <!-- CONTACT LINKS: Edit your contact links below -->
-              <div class="contact-links">
-                <a href="https://github.com/Oabraham1" target="_blank" rel="noreferrer">GitHub →</a>
-                <a href="https://scholar.google.com/citations?user=8QdVQbQAAAAJ&hl=en&oi=ao" target="_blank" rel="noreferrer">Scholar →</a>
-                <a href="https://ojimaabraham.substack.com" target="_blank" rel="noreferrer">Substack →</a>
-                <a href="https://www.linkedin.com/in/ojima-abraham/" target="_blank" rel="noreferrer">LinkedIn →</a>
-                <a href="https://x.com/chef_jiggy" target="_blank" rel="noreferrer">X →</a>
-              </div>
-              <div class="colophon">Zero dependencies. Just HTML, CSS &amp; JS. Hosted on GitHub Pages.</div>
-            </article>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="container">
-        <hr class="footer-rule" />
-        <div class="footer-copy">© 2026 Ojima Abraham</div>
-      </div>
-    </footer>
-
-    <script>
-      const nav = document.querySelector(".site-nav");
-      const navToggle = document.querySelector(".nav-toggle");
-      const navLinks = Array.from(document.querySelectorAll(".nav-link"));
-      const sections = Array.from(document.querySelectorAll("main section[id]"));
-      const revealNodes = Array.from(document.querySelectorAll(".reveal"));
-      const heatmap = document.getElementById("heatmap");
-
-      revealNodes.forEach((node, index) => {
-        node.style.setProperty("--delay", `${(index % 10) * 70}ms`);
-      });
-
-      const revealObserver = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          });
-        },
-        { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
-      );
-
-      revealNodes.forEach((node) => revealObserver.observe(node));
-
-      const setActiveLink = (id) => {
-        navLinks.forEach((link) => {
-          const active = link.getAttribute("href") === `#${id}`;
-          link.classList.toggle("is-active", active);
-        });
-      };
-
-      const sectionObserver = new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-          if (visible) {
-            setActiveLink(visible.target.id);
-          }
-        },
-        {
-          threshold: [0.2, 0.35, 0.55],
-          rootMargin: "-20% 0px -45% 0px",
-        }
-      );
-
-      sections.forEach((section) => sectionObserver.observe(section));
-
-      navLinks.forEach((link) => {
-        link.addEventListener("click", (event) => {
-          event.preventDefault();
-          const target = document.querySelector(link.getAttribute("href"));
-          if (!target) return;
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          nav.classList.remove("is-open");
-          navToggle.setAttribute("aria-expanded", "false");
-        });
-      });
-
-      navToggle.addEventListener("click", () => {
-        const expanded = navToggle.getAttribute("aria-expanded") === "true";
-        navToggle.setAttribute("aria-expanded", String(!expanded));
-        nav.classList.toggle("is-open", !expanded);
-      });
-
-      document.addEventListener("click", (event) => {
-        if (!nav.contains(event.target)) {
-          nav.classList.remove("is-open");
-          navToggle.setAttribute("aria-expanded", "false");
-        }
-      });
-
-      const handleScrollState = () => {
-        nav.classList.toggle("is-scrolled", window.scrollY > 12);
-      };
-
-      handleScrollState();
-      window.addEventListener("scroll", handleScrollState, { passive: true });
-
-      const activityLevels = [
-        0.06, 0.12, 0.18, 0.28, 0.12, 0.2, 0.08,
-        0.1, 0.24, 0.32, 0.12, 0.36, 0.18, 0.06,
-        0.14, 0.08, 0.12, 0.22, 0.18, 0.26, 0.12,
-        0.32, 0.08, 0.1, 0.24, 0.16, 0.18, 0.3,
-        0.06, 0.12, 0.2, 0.36, 0.14, 0.1, 0.26,
-        0.3, 0.34, 0.16, 0.08, 0.18, 0.22, 0.12,
-        0.16, 0.3, 0.38, 0.18, 0.08, 0.16, 0.26,
-        0.06, 0.12, 0.28, 0.24, 0.18, 0.34, 0.12,
-        0.1, 0.14, 0.18, 0.3, 0.12, 0.08, 0.22,
-        0.24, 0.34, 0.12, 0.16, 0.28, 0.2, 0.1,
-        0.08, 0.18, 0.26, 0.16, 0.12, 0.22, 0.34,
-        0.1, 0.08, 0.2, 0.3, 0.16, 0.24, 0.12,
-        0.18, 0.28, 0.36, 0.12, 0.1, 0.26, 0.22,
-        0.12, 0.18, 0.24, 0.3, 0.14, 0.2, 0.08,
-        0.1, 0.16, 0.28, 0.34, 0.12, 0.18, 0.26,
-        0.06, 0.1, 0.2, 0.24, 0.14, 0.3, 0.18,
-        0.08, 0.16, 0.12, 0.34, 0.2, 0.1, 0.24,
-        0.18, 0.3, 0.38, 0.12, 0.08, 0.18, 0.26,
-        0.12, 0.2, 0.28, 0.16, 0.1, 0.24, 0.32,
-        0.06, 0.12, 0.22, 0.18, 0.14, 0.26, 0.36
-      ];
-
-      activityLevels.forEach((level) => {
-        const cell = document.createElement("span");
-        cell.style.setProperty("--level", level.toFixed(2));
-        heatmap.appendChild(cell);
-      });
-    </script>
-  </body>
+            activityLevels.forEach((level) => {
+                const cell = document.createElement("span");
+                cell.style.setProperty("--level", level.toFixed(2));
+                heatmap.appendChild(cell);
+            });
+        </script>
+    </body>
 </html>
